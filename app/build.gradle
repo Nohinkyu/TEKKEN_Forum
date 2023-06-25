@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
 }
 
@@ -20,6 +21,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "GOOGLE_CLIENT_ID", properties["google_client_id"]
+        buildConfigField "String", "KAKAO_API_KEY", properties["kakao_api_key"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,4 +63,23 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+
+    // Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:1.14.0"
+    implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+    ksp 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+
+    // Coil
+    implementation "io.coil-kt:coil:2.4.0"
 }
