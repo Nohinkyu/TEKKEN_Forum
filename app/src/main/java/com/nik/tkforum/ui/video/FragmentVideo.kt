@@ -1,11 +1,14 @@
 package com.nik.tkforum.ui.video
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.nik.tkforum.BuildConfig
@@ -38,6 +41,20 @@ class FragmentVideo : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
+        val editText = binding.etVideo
+        editText.setOnKeyListener { view, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (editText.text.isNullOrEmpty()) {
+                    return@setOnKeyListener true
+                }
+                val imm =
+                    requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etVideo.windowToken, 0)
+                searchVideo()
+                editText.text = null
+            }
+            false
+        }
     }
 
     override fun onDestroyView() {
@@ -56,6 +73,22 @@ class FragmentVideo : Fragment() {
                 Constants.RECOMMENDED_VIDEO_TAG.random()
             )
             adapter.submitList(response.documents)
+        }
+    }
+
+    private fun searchVideo() {
+        val adapter = VideoAdapter(videoClickListener)
+        binding.rvVideoItemList.adapter = adapter
+        val keyword = binding.etVideo.text.toString()
+        val appContainer = (activity?.application as TekkenForumApplication).appContainer
+        val apiClient = appContainer.provideApiClient()
+        lifecycleScope.launch {
+            val response = apiClient.getVideo(
+                BuildConfig.KAKAO_API_KEY,
+                keyword
+            )
+            adapter.submitList(response.documents)
+            adapter.notifyDataSetChanged()
         }
     }
 }
