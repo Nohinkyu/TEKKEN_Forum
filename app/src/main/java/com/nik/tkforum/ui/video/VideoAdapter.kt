@@ -25,14 +25,8 @@ class VideoAdapter(private val clickListener: VideoClickListener) :
     class VideoViewHolder(private val binding: ItemVideoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(video: Video, clickListener: VideoClickListener) {
-            itemView.setOnClickListener {
-                clickListener.onClick(video.url)
-            }
-            binding.tvVideoTitle.text = video.title
-            binding.tvVideoTime.text = "${video.playTime / 60}:${video.playTime % 60}"
-            binding.tvVideoAuthor.text = video.author
-            binding.tvVideoDate.text = convertToDisplayDate(video.datetime)
-            binding.ivVideoThumbnail.load(video.thumbnail)
+            binding.video = video
+            binding.clickListner = clickListener
         }
 
         companion object {

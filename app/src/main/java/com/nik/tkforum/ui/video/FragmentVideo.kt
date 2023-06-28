@@ -10,24 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.nik.tkforum.BuildConfig
+import androidx.fragment.app.viewModels
 import com.nik.tkforum.databinding.FragmentVideoBinding
+import com.nik.tkforum.repository.VideoRepository
 import com.nik.tkforum.util.Constants
-import com.nik.tkforum.ui.TekkenForumApplication
+import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.util.VideoClickListener
-import kotlinx.coroutines.launch
 
-class FragmentVideo : Fragment() {
+class FragmentVideo : Fragment(), VideoClickListener {
 
     private var _binding: FragmentVideoBinding? = null
     private val binding get() = _binding!!
-    private val videoClickListener = object : VideoClickListener {
-        override fun onClick(url: String) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
-        }
+    private val viewModel by viewModels<VideoViewModel> {
+        VideoViewModel.provideFactory(repository = VideoRepository(TekkenForumApplication.appContainer.provideApiClient()))
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +37,7 @@ class FragmentVideo : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setLayout()
+        searchVideo()
         val editText = binding.etVideo
         editText.setOnKeyListener { view, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -62,32 +59,21 @@ class FragmentVideo : Fragment() {
         _binding = null
     }
 
-    private fun setLayout() {
-        val adapter = VideoAdapter(videoClickListener)
+    private fun searchVideo() {
+        val adapter = VideoAdapter(this)
+        var keyword = binding.etVideo.text.toString()
+        if (keyword.isEmpty()) {
+            keyword = Constants.RECOMMENDED_VIDEO_TAG.random()
+        }
         binding.rvVideoItemList.adapter = adapter
-        val appContainer = (activity?.application as TekkenForumApplication).appContainer
-        val apiClient = appContainer.provideApiClient()
-        lifecycleScope.launch {
-            val response = apiClient.getVideo(
-                BuildConfig.KAKAO_API_KEY,
-                Constants.RECOMMENDED_VIDEO_TAG.random()
-            )
-            adapter.submitList(response.documents)
+        viewModel.loadVideo(keyword)
+        viewModel.videoList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
-    private fun searchVideo() {
-        val adapter = VideoAdapter(videoClickListener)
-        binding.rvVideoItemList.adapter = adapter
-        val keyword = binding.etVideo.text.toString()
-        val appContainer = (activity?.application as TekkenForumApplication).appContainer
-        val apiClient = appContainer.provideApiClient()
-        lifecycleScope.launch {
-            val response = apiClient.getVideo(
-                BuildConfig.KAKAO_API_KEY,
-                keyword
-            )
-            adapter.submitList(response.documents)
-        }
+    override fun onClick(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }
