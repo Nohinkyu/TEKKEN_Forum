@@ -1,4 +1,4 @@
-package com.nik.tkforum.ui
+package com.nik.tkforum.util
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

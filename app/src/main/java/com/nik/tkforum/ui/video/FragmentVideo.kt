@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.databinding.FragmentVideoBinding
-import com.nik.tkforum.ui.Constants
+import com.nik.tkforum.util.Constants
 import com.nik.tkforum.ui.TekkenForumApplication
-import com.nik.tkforum.ui.VideoClickListener
+import com.nik.tkforum.util.VideoClickListener
 import kotlinx.coroutines.launch
 
 class FragmentVideo : Fragment() {

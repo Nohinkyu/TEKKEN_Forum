@@ -1,7 +1,7 @@
 package com.nik.tkforum.ui.network
 
-import com.nik.tkforum.ui.Constants.KAKAO_BASE_URL
-import com.nik.tkforum.ui.VideoResponse
+import com.nik.tkforum.data.VideoResponse
+import com.nik.tkforum.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -34,7 +34,7 @@ interface ApiClient {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(KAKAO_BASE_URL)
+                .baseUrl(Constants.KAKAO_BASE_URL)
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()

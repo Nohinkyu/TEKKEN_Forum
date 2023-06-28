@@ -1,4 +1,4 @@
-package com.nik.tkforum.ui
+package com.nik.tkforum.data
 
 import com.squareup.moshi.Json
 
