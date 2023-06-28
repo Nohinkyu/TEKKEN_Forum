@@ -88,7 +88,6 @@ class FragmentVideo : Fragment() {
                 keyword
             )
             adapter.submitList(response.documents)
-            adapter.notifyDataSetChanged()
         }
     }
 }
