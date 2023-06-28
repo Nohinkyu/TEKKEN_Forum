@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.nik.tkforum.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_video"
+        android:name="com.nik.tkforum.ui.video.FragmentVideo"
+        android:label="@string/video"
+        tools:layout="@layout/fragment_video"/>
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.nik.tkforum.ui.chat.FragmentChat"
+        android:label="@string/chat"
+        tools:layout="@layout/fragment_chat"/>
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="com.nik.tkforum.ui.setting.FragmentSetting"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting"/>
+
+</navigation>
