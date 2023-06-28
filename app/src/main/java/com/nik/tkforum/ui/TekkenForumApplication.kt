@@ -1,7 +1,7 @@
 package com.nik.tkforum.ui
 
 import android.app.Application
-import com.nik.tkforum.ui.network.AppContainer
+import com.nik.tkforum.network.AppContainer
 
 class TekkenForumApplication : Application() {
 

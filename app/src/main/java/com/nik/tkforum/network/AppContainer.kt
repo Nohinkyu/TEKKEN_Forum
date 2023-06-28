@@ -1,4 +1,4 @@
-package com.nik.tkforum.ui.network
+package com.nik.tkforum.network
 
 class AppContainer {
 
