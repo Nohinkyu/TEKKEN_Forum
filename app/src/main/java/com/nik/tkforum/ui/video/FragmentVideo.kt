@@ -5,34 +5,23 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentVideoBinding
 import com.nik.tkforum.repository.VideoRepository
 import com.nik.tkforum.util.Constants
 import com.nik.tkforum.TekkenForumApplication
+import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.VideoClickListener
 
-class FragmentVideo : Fragment(), VideoClickListener {
+class FragmentVideo : BaseFragment(), VideoClickListener {
 
-    private var _binding: FragmentVideoBinding? = null
-    private val binding get() = _binding!!
+    override val binding get() = _binding as FragmentVideoBinding
+    override val layoutId: Int get() = R.layout.fragment_video
     private val viewModel by viewModels<VideoViewModel> {
         VideoViewModel.provideFactory(repository = VideoRepository(TekkenForumApplication.appContainer.provideApiClient()))
-    }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentVideoBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,11 +41,6 @@ class FragmentVideo : Fragment(), VideoClickListener {
             }
             false
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun searchVideo() {
