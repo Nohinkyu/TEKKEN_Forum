@@ -4,6 +4,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 Properties properties = new Properties()
