@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
             android:paddingStart="16dp"
-            android:text="로그아웃"
+            android:text="@string/sign_out"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
