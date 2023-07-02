@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.nik.tkforum.databinding.ItemVideoBinding
-import com.nik.tkforum.util.DateFormat.convertToDisplayDate
 import com.nik.tkforum.data.Video
 import com.nik.tkforum.util.VideoClickListener
 
