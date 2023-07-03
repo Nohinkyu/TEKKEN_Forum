@@ -5,4 +5,5 @@
     <string name="chat">Chat</string>
     <string name="setting">Setting</string>
     <string name="character_list">Character List</string>
+    <string name="video_hint">동영상을 검색해주세요~</string>
 </resources>
