@@ -39,11 +39,6 @@ class SignInFragment : BaseFragment() {
         signInClient = Identity.getSignInClient(requireActivity())
         setSingInRequest()
 
-        if (auth.currentUser != null) {
-            val action = SignInFragmentDirections.actionNavLoginToNavHome()
-            findNavController().navigate(action)
-        }
-
         binding.btGoogleSignIn.setOnClickListener {
             signIn()
         }
