@@ -2,6 +2,7 @@ package com.nik.tkforum.ui.setting
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentSettingBinding
@@ -23,5 +24,6 @@ class SettingFragment : BaseFragment() {
 
     private fun signOut() {
         firebaseAuth.signOut()
+        findNavController().navigate(SettingFragmentDirections.actionNavSettingToNavLogin())
     }
 }
