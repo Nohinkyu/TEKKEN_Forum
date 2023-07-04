@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/nav_sign_in">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_sign_in"
@@ -17,12 +17,17 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-
     <fragment
         android:id="@+id/nav_home"
         android:name="com.nik.tkforum.ui.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_sign_in"
+            app:destination="@id/nav_sign_in"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_video"
         android:name="com.nik.tkforum.ui.video.FragmentVideo"
@@ -41,7 +46,7 @@
         <action
             android:id="@+id/action_nav_setting_to_nav_login"
             app:destination="@id/nav_sign_in"
-            app:popUpTo="@id/nav_setting"
+            app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
     </fragment>
 
