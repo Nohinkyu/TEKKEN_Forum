@@ -9,4 +9,6 @@
     <string name="character_list">Character List</string>
     <string name="video_hint">동영상을 검색해주세요~</string>
     <string name="sign_out">로그아웃</string>
+    <string name="chat_room">Chat Room</string>
+    <string name="label_create_chat_room">채팅방 생성</string>
 </resources>
