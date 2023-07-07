@@ -17,7 +17,7 @@ interface ApiClient {
     @GET("v2/search/vclip")
     suspend fun getVideo(
         @Header("Authorization") key: String,
-        @Query("query") query: String
+        @Query("query") keyword: String
     ): VideoResponse
 
     companion object {

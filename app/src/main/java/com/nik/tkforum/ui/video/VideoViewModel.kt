@@ -17,9 +17,9 @@ class VideoViewModel(private val repository: VideoRepository) : ViewModel() {
     private val _videoList = MutableLiveData<List<Video>>()
     val videoList: LiveData<List<Video>> = _videoList
 
-    fun loadVideo(query: String) {
+    fun loadVideo(keyword: String) {
         viewModelScope.launch {
-            val videoList = repository.getVideo(BuildConfig.KAKAO_API_KEY, query)
+            val videoList = repository.getVideo(BuildConfig.KAKAO_API_KEY, keyword)
             _videoList.value = videoList
         }
     }

@@ -3,23 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/nav_login">
+    app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/nav_login"
-        android:name="com.nik.tkforum.ui.login.LoginFragment"
+        android:id="@+id/nav_sign_in"
+        android:name="com.nik.tkforum.ui.login.SignInFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_nav_login_to_nav_home2"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_nav_login_to_nav_home"
+            app:destination="@id/nav_home"
+            app:popUpTo="@id/nav_sign_in"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_home"
         android:name="com.nik.tkforum.ui.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_sign_in"
+            app:destination="@id/nav_sign_in"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_video"
         android:name="com.nik.tkforum.ui.video.FragmentVideo"
@@ -27,13 +35,19 @@
         tools:layout="@layout/fragment_video" />
     <fragment
         android:id="@+id/nav_chat"
-        android:name="com.nik.tkforum.ui.chat.FragmentChat"
+        android:name="com.nik.tkforum.ui.chat.ChatFragment"
         android:label="@string/chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/nav_setting"
-        android:name="com.nik.tkforum.ui.setting.FragmentSetting"
+        android:name="com.nik.tkforum.ui.setting.SettingFragment"
         android:label="@string/setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_nav_setting_to_nav_login"
+            app:destination="@id/nav_sign_in"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>
