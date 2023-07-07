@@ -21,7 +21,7 @@ class FragmentVideo : BaseFragment(), VideoClickListener {
     override val binding get() = _binding as FragmentVideoBinding
     override val layoutId: Int get() = R.layout.fragment_video
     private val viewModel by viewModels<VideoViewModel> {
-        VideoViewModel.provideFactory(repository = VideoRepository(TekkenForumApplication.appContainer.provideApiClient()))
+        VideoViewModel.provideFactory(repository = VideoRepository(TekkenForumApplication.appContainer.provideKakaoApiClient()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

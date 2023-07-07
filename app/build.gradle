@@ -23,6 +23,7 @@ android {
 
         buildConfigField "String", "GOOGLE_CLIENT_ID", properties["google_client_id"]
         buildConfigField "String", "KAKAO_API_KEY", properties["kakao_api_key"]
+        buildConfigField "String", "GOOGLE_BASE_URL", properties["google_base_url"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
