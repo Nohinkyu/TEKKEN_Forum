@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/nav_login">
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.nik.tkforum.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_nav_login_to_nav_home2"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_home"
@@ -14,16 +24,16 @@
         android:id="@+id/nav_video"
         android:name="com.nik.tkforum.ui.video.FragmentVideo"
         android:label="@string/video"
-        tools:layout="@layout/fragment_video"/>
+        tools:layout="@layout/fragment_video" />
     <fragment
         android:id="@+id/nav_chat"
         android:name="com.nik.tkforum.ui.chat.FragmentChat"
         android:label="@string/chat"
-        tools:layout="@layout/fragment_chat"/>
+        tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.nik.tkforum.ui.setting.FragmentSetting"
         android:label="@string/setting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting" />
 
 </navigation>
