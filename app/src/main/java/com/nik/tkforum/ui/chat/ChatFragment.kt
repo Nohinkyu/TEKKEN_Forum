@@ -20,7 +20,6 @@ class ChatFragment : BaseFragment() {
                     findNavController().navigate(ChatFragmentDirections.actionNavChatToNavChatRoom())
                     true
                 }
-
                 else -> false
             }
         }

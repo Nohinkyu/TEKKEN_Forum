@@ -10,7 +10,6 @@ import coil.transform.CircleCropTransformation
 import com.nik.tkforum.databinding.ItemReceivedChatBinding
 import com.nik.tkforum.databinding.ItemSentChatBinding
 
-
 private const val ITEM_TYPE_RECEIVED_CHAT = 0
 private const val ITEM_TYPE_SENT_CHAT = 1
 
