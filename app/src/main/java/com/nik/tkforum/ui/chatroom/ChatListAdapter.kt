@@ -93,7 +93,7 @@ class ChatListAdapter : ListAdapter<ChatType, ViewHolder>(ChatTypeDiffUtil()) {
     class ChatTypeDiffUtil : DiffUtil.ItemCallback<ChatType>() {
 
         override fun areItemsTheSame(oldItem: ChatType, newItem: ChatType): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: ChatType, newItem: ChatType): Boolean {
