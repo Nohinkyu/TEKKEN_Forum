@@ -18,6 +18,10 @@ class ChatRoomFragment : BaseFragment() {
     override val binding get() = _binding as FragmentChatRoomBinding
     override val layoutId: Int get() = R.layout.fragment_chat_room
 
+    private val appContainer = TekkenForumApplication.appContainer
+    private val apiClient = appContainer.provideGoogleApiClient()
+    private val firebase = FirebaseAuth.getInstance().currentUser
+
     private val result = mutableListOf<ChatType>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,8 +44,6 @@ class ChatRoomFragment : BaseFragment() {
     private fun setLayout() {
         val adapter = ChatListAdapter()
         binding.rvChatList.adapter = adapter
-        val appContainer = TekkenForumApplication.appContainer
-        val apiClient = appContainer.provideGoogleApiClient()
         lifecycleScope.launch {
             val response = apiClient.getChatList()
             try {
@@ -72,9 +74,6 @@ class ChatRoomFragment : BaseFragment() {
     }
 
     private fun sendChat() {
-        val appContainer = TekkenForumApplication.appContainer
-        val apiClient = appContainer.provideGoogleApiClient()
-        val firebase = FirebaseAuth.getInstance().currentUser
         val chat = Chat(
             firebase?.photoUrl.toString(),
             firebase?.displayName.toString(),
