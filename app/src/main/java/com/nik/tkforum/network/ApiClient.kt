@@ -1,15 +1,18 @@
 package com.nik.tkforum.network
 
+import com.nik.tkforum.data.Chat
 import com.nik.tkforum.data.VideoResponse
-import com.nik.tkforum.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiClient {
@@ -20,11 +23,17 @@ interface ApiClient {
         @Query("query") keyword: String
     ): VideoResponse
 
+    @GET("chatList.json")
+    suspend fun getChatList(): Response<Map<String, Chat>>
+
+    @POST("chatList.json")
+    suspend fun sendChat(@Body chat: Chat): Response<Map<String,String>>
+
     companion object {
 
         private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-        fun create(): ApiClient {
+        fun create(baseUrl: String): ApiClient {
             val logger = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
@@ -34,7 +43,7 @@ interface ApiClient {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(Constants.KAKAO_BASE_URL)
+                .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
