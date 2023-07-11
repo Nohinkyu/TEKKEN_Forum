@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">tkForum</string>
     <string name="app_title">TEKKEN FORUM</string>
-    <string name="home">Home</string>
+    <string name="home">CHARACTER LIST</string>
     <string name="video">Video</string>
     <string name="chat">Chat</string>
     <string name="login">Login</string>

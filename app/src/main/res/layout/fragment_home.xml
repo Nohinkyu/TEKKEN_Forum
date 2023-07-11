@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -20,6 +21,18 @@
             app:title="@string/home"
             app:titleMarginStart="16dp"
             app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_character_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:spanCount="4"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_home"
+            tools:listitem="@layout/item_character" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
