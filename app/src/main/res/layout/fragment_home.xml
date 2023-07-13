@@ -18,7 +18,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/home"
+            app:title="@string/character_list"
             app:titleMarginStart="16dp"
             app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
 
