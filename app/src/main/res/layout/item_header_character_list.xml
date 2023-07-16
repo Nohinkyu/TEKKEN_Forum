@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
+        android:id="@+id/tv_header_character_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="FR ORIGIN"
