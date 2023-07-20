@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header_move_name"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_move_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_start"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_header_move_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_grad"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_guard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_move_start"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_hit"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_hit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_move_grad"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_counter"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_counter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_move_hit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_hit_level"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_hit_level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_move_counter"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_move_damage"
+        style="@style/FrameDataHeaderStyle"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="@drawable/border_white"
+        android:gravity="center"
+        android:text="@string/frame_header_damage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_move_hit_level"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
