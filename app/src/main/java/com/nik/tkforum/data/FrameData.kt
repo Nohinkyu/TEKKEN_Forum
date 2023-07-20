@@ -10,5 +10,5 @@ data class FrameData(
     val counterFrame: String,
     val hitLevel: String,
     val damage: String,
-    val note: String?,
+    val note: String = "",
 )

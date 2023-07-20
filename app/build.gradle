@@ -82,4 +82,7 @@ dependencies {
 
     // Coil
     implementation "io.coil-kt:coil:2.4.0"
+
+    // ConcatAdapter
+    implementation "androidx.recyclerview:recyclerview:1.3.0"
 }

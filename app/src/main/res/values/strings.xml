@@ -11,4 +11,13 @@
     <string name="sign_out">로그아웃</string>
     <string name="chat_room">Chat Room</string>
     <string name="label_create_chat_room">채팅방 생성</string>
+    <string name="label_manual">설명서</string>
+    <string name="frame_list">Frame List</string>
+    <string name="frame_header_move_name">기술명, 커맨드</string>
+    <string name="frame_header_start">발생</string>
+    <string name="frame_header_guard">가드</string>
+    <string name="frame_header_hit">히트</string>
+    <string name="frame_header_counter">카운터</string>
+    <string name="frame_header_hit_level">판정</string>
+    <string name="frame_header_damage">데미지</string>
 </resources>
