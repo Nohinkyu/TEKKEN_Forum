@@ -27,6 +27,9 @@
             app:destination="@id/nav_sign_in"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_frame_list"
+            app:destination="@id/nav_frame_list" />
     </fragment>
     <fragment
         android:id="@+id/nav_video"
@@ -59,5 +62,11 @@
         android:name="com.nik.tkforum.ui.chatroom.ChatRoomFragment"
         android:label="@string/chat_room"
         tools:layout="@layout/fragment_chat_room" />
+
+    <fragment
+        android:id="@+id/nav_frame_list"
+        android:name="com.nik.tkforum.ui.frameList.FrameListFragment"
+        android:label="@string/frame_list"
+        tools:layout="@layout/fragment_frame_list" />
 
 </navigation>
