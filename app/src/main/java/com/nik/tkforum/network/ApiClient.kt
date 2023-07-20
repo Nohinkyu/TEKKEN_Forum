@@ -20,7 +20,8 @@ interface ApiClient {
     @GET("v2/search/vclip")
     suspend fun getVideo(
         @Header("Authorization") key: String,
-        @Query("query") keyword: String
+        @Query("query") keyword: String,
+        @Query("page") page: Int
     ): VideoResponse
 
     @GET("chatList.json")
