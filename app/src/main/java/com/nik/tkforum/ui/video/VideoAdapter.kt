@@ -2,22 +2,22 @@ package com.nik.tkforum.ui.video
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nik.tkforum.databinding.ItemVideoBinding
 import com.nik.tkforum.data.Video
 import com.nik.tkforum.util.VideoClickListener
 
 class VideoAdapter(private val clickListener: VideoClickListener) :
-    ListAdapter<Video, VideoAdapter.VideoViewHolder>(VideoListDiffUtil()) {
+    PagingDataAdapter<Video, VideoAdapter.VideoViewHolder>(VideoListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         return VideoViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        holder.bind(currentList[position], clickListener)
+        getItem(position)?.let { holder.bind(it, clickListener) }
     }
 
     class VideoViewHolder(private val binding: ItemVideoBinding) :

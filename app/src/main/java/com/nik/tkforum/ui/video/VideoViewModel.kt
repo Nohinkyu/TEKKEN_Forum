@@ -1,27 +1,21 @@
 package com.nik.tkforum.ui.video
 
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.data.Video
 import com.nik.tkforum.repository.VideoRepository
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 class VideoViewModel(private val repository: VideoRepository) : ViewModel() {
 
-    private val _videoList = MutableLiveData<List<Video>>()
-    val videoList: LiveData<List<Video>> = _videoList
-
-    fun loadVideo(keyword: String) {
-        viewModelScope.launch {
-            val videoList = repository.getVideo(BuildConfig.KAKAO_API_KEY, keyword)
-            _videoList.value = videoList
-        }
+    fun loadVideo(keyword: String): Flow<PagingData<Video>> {
+        return repository.getVideoList(BuildConfig.KAKAO_API_KEY, keyword, 1)
+            .cachedIn(viewModelScope)
     }
 
     companion object {

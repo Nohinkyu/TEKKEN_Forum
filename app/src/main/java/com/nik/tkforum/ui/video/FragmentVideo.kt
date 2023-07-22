@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentVideoBinding
 import com.nik.tkforum.repository.VideoRepository
@@ -15,6 +16,8 @@ import com.nik.tkforum.util.Constants
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.VideoClickListener
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class FragmentVideo : BaseFragment(), VideoClickListener {
 
@@ -50,9 +53,10 @@ class FragmentVideo : BaseFragment(), VideoClickListener {
             keyword = Constants.RECOMMENDED_VIDEO_TAG.random()
         }
         binding.rvVideoItemList.adapter = adapter
-        viewModel.loadVideo(keyword)
-        viewModel.videoList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.loadVideo(keyword).collectLatest {
+                adapter.submitData(it)
+            }
         }
     }
 
