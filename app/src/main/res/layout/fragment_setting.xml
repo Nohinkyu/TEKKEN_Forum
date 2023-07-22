@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,13 +22,84 @@
             app:titleMarginStart="16dp"
             app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
 
+        <ImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="100dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_question_mark" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="end"
+            android:text="@string/profile_info"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile_image"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_image" />
+
+        <TextView
+            android:id="@+id/tv_info_nickname"
+            style="@style/SettingPageUserInfoStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/nickname"
+            app:layout_constraintStart_toStartOf="@id/iv_profile_image"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_image" />
+
+        <TextView
+            android:id="@+id/tv_info_mail"
+            style="@style/SettingPageUserInfoStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/mail"
+            app:layout_constraintStart_toStartOf="@id/tv_info_nickname"
+            app:layout_constraintTop_toBottomOf="@id/tv_info_nickname" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/SettingPageUserInfoStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_info_nickname"
+            app:layout_constraintTop_toTopOf="@id/tv_info_nickname"
+            tools:text="와신군" />
+
+        <TextView
+            android:id="@+id/tv_mail"
+            style="@style/SettingPageUserInfoStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_info_mail"
+            app:layout_constraintTop_toTopOf="@id/tv_info_mail"
+            tools:text="wasingun@gmail.com" />
+
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
+            android:background="@drawable/border_grey"
             android:paddingStart="16dp"
             android:text="@string/sign_out"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
