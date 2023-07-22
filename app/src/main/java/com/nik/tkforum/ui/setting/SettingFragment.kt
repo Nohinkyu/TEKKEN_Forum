@@ -1,5 +1,7 @@
 package com.nik.tkforum.ui.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -26,6 +28,9 @@ class SettingFragment : BaseFragment() {
         binding.tvLogout.setOnClickListener {
             signOut()
         }
+        binding.tvSurvey.setOnClickListener {
+            surveyClick()
+        }
     }
 
     private fun signOut() {
@@ -44,5 +49,10 @@ class SettingFragment : BaseFragment() {
                 transformations(CircleCropTransformation())
             }
         }
+    }
+
+    private fun surveyClick() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.SURVEY_URI))
+        startActivity(intent)
     }
 }
