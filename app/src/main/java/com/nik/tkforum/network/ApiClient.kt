@@ -1,6 +1,7 @@
 package com.nik.tkforum.network
 
 import com.nik.tkforum.data.Chat
+import com.nik.tkforum.data.ChatRoom
 import com.nik.tkforum.data.VideoResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -29,6 +30,12 @@ interface ApiClient {
 
     @POST("chatList.json")
     suspend fun sendChat(@Body chat: Chat): Response<Map<String,String>>
+
+    @POST("chatRoomList.json")
+    suspend fun createChatRoom(@Body chatRoom: ChatRoom): Response<Map<String, String>>
+
+    @GET("chatRoomList.json")
+    suspend fun getChatRoomList(): Response<Map<String, ChatRoom>>
 
     companion object {
 
