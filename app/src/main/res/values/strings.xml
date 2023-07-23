@@ -25,4 +25,5 @@
     <string name="mail">이메일</string>
     <string name="download_frame_data">프레임 데이터 다시 받기</string>
     <string name="survey">고객 의견</string>
+    <string name="empty_chat">채팅 내역이 존재하지 않습니다.</string>
 </resources>
