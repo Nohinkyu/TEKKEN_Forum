@@ -9,9 +9,11 @@ import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.TekkenForumApplication.Companion.preferencesManager
 import com.nik.tkforum.data.ChatRoom
+import com.nik.tkforum.data.ChatRoomInfo
 import com.nik.tkforum.data.User
 import com.nik.tkforum.databinding.FragmentChatBinding
 import com.nik.tkforum.ui.BaseFragment
+import com.nik.tkforum.util.ChatRoomClickListener
 import com.nik.tkforum.util.Constants
 import kotlinx.coroutines.launch
 
@@ -23,6 +25,36 @@ class ChatFragment : BaseFragment() {
     private val appContainer = TekkenForumApplication.appContainer
     private val apiClient = appContainer.provideGoogleApiClient()
 
+    private val user = User(
+        preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
+        preferencesManager.getString(Constants.KEY_NICKNAME, ""),
+        preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
+    )
+
+    private val chatRoomClickListener = object : ChatRoomClickListener {
+        override fun chatRoomClick(chatRoomKey: String) {
+            val action = ChatFragmentDirections.actionNavChatToNavChatRoom(chatRoomKey)
+            findNavController().navigate(action)
+            lifecycleScope.launch {
+                val response = apiClient.getChatRoomList()
+                try {
+                    if (response.isSuccessful) {
+                        val data = response.body()
+                        data?.let {
+                            if (!data.getValue(chatRoomKey).userList.values.contains(user)) {
+                                apiClient.joinUser(chatRoomKey, user)
+                            }
+                        }
+                    } else {
+                        val errorMessage = response.errorBody().toString()
+                        Log.d("ChatRoomListFragment", errorMessage)
+                    }
+                } catch (e: Exception) {
+                    Log.d("ChatRoomListFragment", "데이터를 가져오지 못했습니다.")
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +62,6 @@ class ChatFragment : BaseFragment() {
         binding.tbChat.setOnMenuItemClickListener { menuItme ->
             when (menuItme.itemId) {
                 R.id.action_add_chat_room -> {
-                    findNavController().navigate(ChatFragmentDirections.actionNavChatToNavChatRoom())
                     createChatRoom()
                     true
                 }
@@ -41,20 +72,38 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun createChatRoom() {
-        val creator = User(
-            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-        )
         val chatRoom =
-            ChatRoom(creator.nickname, creator.profileUri, listOf<User>(creator))
+            ChatRoom(user.nickname, user.profileUri, mapOf(Constants.CREATOR_KET to user))
         lifecycleScope.launch {
             apiClient.createChatRoom(chatRoom)
+            val response = apiClient.getChatRoomList()
+            try {
+                var lastChatRoomKey = ""
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        lastChatRoomKey = data.keys.last()
+                        findNavController().navigate(
+                            ChatFragmentDirections.actionNavChatToNavChatRoom(
+                                lastChatRoomKey
+                            )
+                        )
+
+                    }
+                } else {
+                    val errorMessage = response.errorBody().toString()
+                    Log.d("ChatRoomListFragment", errorMessage)
+                }
+            } catch (e: Exception) {
+                Log.d("ChatRoomListFragment", "데이터를 가져오지 못했습니다.")
+            }
         }
     }
 
+
     private fun setLayout() {
-        val adapter = ChatRoomListAdapter()
+        val chatRoomList = mutableListOf<ChatRoomInfo>()
+        val adapter = ChatRoomListAdapter(chatRoomClickListener)
         binding.rvChatRoomList.adapter = adapter
         lifecycleScope.launch {
             val response = apiClient.getChatRoomList()
@@ -62,7 +111,10 @@ class ChatFragment : BaseFragment() {
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
-                        adapter.submitList(data.values.toList())
+                        for (chatRoom in data) {
+                            chatRoomList.add(ChatRoomInfo(chatRoom.key, chatRoom.value))
+                        }
+                        adapter.submitList(chatRoomList)
                     }
                 } else {
                     val errorMessage = response.errorBody().toString()

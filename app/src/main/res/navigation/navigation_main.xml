@@ -45,6 +45,7 @@
             android:id="@+id/action_nav_chat_to_nav_chat_room"
             app:destination="@id/nav_chat_room" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.nik.tkforum.ui.setting.SettingFragment"
@@ -61,7 +62,11 @@
         android:id="@+id/nav_chat_room"
         android:name="com.nik.tkforum.ui.chatroom.ChatRoomFragment"
         android:label="@string/chat_room"
-        tools:layout="@layout/fragment_chat_room" />
+        tools:layout="@layout/fragment_chat_room">
+        <argument
+            android:name="chatRoomKey"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_frame_list"
