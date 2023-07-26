@@ -6,19 +6,23 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        tools:src="@color/black"
         android:id="@+id/iv_sent_chat_profile"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_sent_chat"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/black" />
 
     <TextView
         android:id="@+id/tv_sent_chat_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="end"
         android:textColor="@color/black"
         android:textSize="10sp"
@@ -31,6 +35,9 @@
         android:id="@+id/tv_sent_chat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="end"
         android:textColor="@color/black"
         android:textSize="16sp"
