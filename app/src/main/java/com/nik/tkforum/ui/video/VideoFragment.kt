@@ -19,7 +19,7 @@ import com.nik.tkforum.util.VideoClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class FragmentVideo : BaseFragment(), VideoClickListener {
+class VideoFragment : BaseFragment(), VideoClickListener {
 
     override val binding get() = _binding as FragmentVideoBinding
     override val layoutId: Int get() = R.layout.fragment_video
