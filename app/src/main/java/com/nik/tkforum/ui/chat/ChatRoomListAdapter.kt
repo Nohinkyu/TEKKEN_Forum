@@ -28,17 +28,8 @@ class ChatRoomListAdapter(private val clickListener: ChatRoomClickListener) :
     ) : RecyclerView.ViewHolder(biding.root) {
 
         fun bind(chatRoom: ChatRoomInfo, clickListener: ChatRoomClickListener) {
-            itemView.setOnClickListener {
-                clickListener.chatRoomClick(chatRoom.key)
-            }
-            val lastChat = chatRoom.chatRoom.chatList.values.toList().lastOrNull()?.message
-                ?: itemView.context.getString(R.string.empty_chat)
-            biding.tvChatTitle.text = "${chatRoom.chatRoom.createUserName} 님의 채팅방 입니다"
-            biding.tvChatUserCount.text = "${chatRoom.chatRoom.userList.size} 명"
-            biding.tvLastChat.text = lastChat
-            biding.ivChatThumbnail.load(chatRoom.chatRoom.createUserProfile) {
-                transformations(CircleCropTransformation())
-            }
+            biding.chatRoomInfo = chatRoom
+            biding.clickListener = clickListener
         }
 
         companion object {
