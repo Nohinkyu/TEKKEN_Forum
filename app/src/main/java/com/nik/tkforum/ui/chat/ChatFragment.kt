@@ -57,7 +57,7 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
         viewModel.lastChatRoomKey.observe(viewLifecycleOwner) { lastChatRoomKey ->
             findNavController().navigate(
                 ChatFragmentDirections.actionNavChatToNavChatRoom(
-                    lastChatRoomKey
+                    lastChatRoomKey, user.nickname
                 )
             )
         }
@@ -72,8 +72,8 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
         }
     }
 
-    override fun chatRoomClick(chatRoomKey: String) {
-        val action = ChatFragmentDirections.actionNavChatToNavChatRoom(chatRoomKey)
+    override fun chatRoomClick(chatRoomKey: String, hostName: String) {
+        val action = ChatFragmentDirections.actionNavChatToNavChatRoom(chatRoomKey, hostName)
         findNavController().navigate(action)
         viewModel.joinUser(chatRoomKey, user)
     }

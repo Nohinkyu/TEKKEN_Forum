@@ -13,4 +13,8 @@ class ChatRoomRepository(private val apiClient: ApiClient) {
     suspend fun sendChat(chatRoomKey: String, chat: Chat): Response<Map<String, String>> {
         return apiClient.sendChat(chatRoomKey, chat)
     }
+
+    suspend fun deleteChatRoom(chatRoomKey: String) {
+        return apiClient.deleteChatRoom(chatRoomKey)
+    }
 }

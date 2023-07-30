@@ -2,5 +2,5 @@ package com.nik.tkforum.util
 
 interface ChatRoomClickListener {
 
-    fun chatRoomClick(chatRoomKey: String)
+    fun chatRoomClick(chatRoomKey: String, hostName: String)
 }

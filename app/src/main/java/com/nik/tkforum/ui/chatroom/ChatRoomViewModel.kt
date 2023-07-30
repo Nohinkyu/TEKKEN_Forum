@@ -80,6 +80,12 @@ class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel(
             })
     }
 
+    fun deleteChatRoom(chatRoomKey: String){
+        viewModelScope.launch {
+            repository.deleteChatRoom(chatRoomKey)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         chatListener = null

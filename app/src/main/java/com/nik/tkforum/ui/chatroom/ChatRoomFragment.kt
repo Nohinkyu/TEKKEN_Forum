@@ -3,7 +3,9 @@ package com.nik.tkforum.ui.chatroom
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.data.Chat
@@ -37,6 +39,8 @@ class ChatRoomFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
+        deleteChatRoom()
+        binding.chatRoomTitle = args.chatRoomHostName
         viewModel.addChatListener(args.chatRoomKey)
 
         val editText = binding.etChat
@@ -66,5 +70,17 @@ class ChatRoomFragment : BaseFragment() {
             user.email
         )
         viewModel.sendChat(args.chatRoomKey, chat)
+    }
+
+    private fun deleteChatRoom() {
+        val action = ChatRoomFragmentDirections.actionNavChatRoomToNavChat()
+        binding.ibDeleteChatRoom.setOnClickListener {
+            if (args.chatRoomHostName == user.nickname) {
+                viewModel.deleteChatRoom(args.chatRoomKey)
+                findNavController().navigate(action)
+            } else {
+                Snackbar.make(binding.root, R.string.not_host, Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 }

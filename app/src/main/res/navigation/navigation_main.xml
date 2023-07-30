@@ -66,6 +66,14 @@
         <argument
             android:name="chatRoomKey"
             app:argType="string" />
+        <argument
+            android:name="chatRoomHostName"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_nav_chat_room_to_nav_chat"
+            app:destination="@id/nav_chat"
+            app:popUpTo="@id/nav_chat"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

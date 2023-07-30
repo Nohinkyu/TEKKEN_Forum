@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.chatRoomClick(chatRoomInfo.key)}">
+        android:onClick="@{() -> clickListener.chatRoomClick(chatRoomInfo.key,chatRoomInfo.chatRoom.createUserName)}">
 
         <ImageView
             android:id="@+id/iv_chat_thumbnail"
