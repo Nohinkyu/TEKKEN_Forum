@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.nik.tkforum.databinding.ItemReceivedChatBinding
 import com.nik.tkforum.databinding.ItemSentChatBinding
 

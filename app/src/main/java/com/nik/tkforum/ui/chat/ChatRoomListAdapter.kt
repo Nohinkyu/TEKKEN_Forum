@@ -5,9 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.nik.tkforum.R
 import com.nik.tkforum.data.ChatRoomInfo
 import com.nik.tkforum.databinding.ItemChatRoomBinding
 import com.nik.tkforum.util.ChatRoomClickListener
