@@ -1,5 +1,7 @@
 package com.nik.tkforum.data
 
+import java.io.Serializable
+
 data class FrameData(
     val name: String,
     val numberCommand: String,
@@ -11,4 +13,4 @@ data class FrameData(
     val hitLevel: String,
     val damage: String,
     val note: String = "",
-)
+) : Serializable
