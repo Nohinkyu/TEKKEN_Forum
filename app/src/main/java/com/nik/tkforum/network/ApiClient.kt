@@ -12,6 +12,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -47,6 +48,9 @@ interface ApiClient {
 
     @GET("chatRoomList.json")
     suspend fun getChatRoomList(): Response<Map<String, ChatRoom>>
+
+    @DELETE("chatRoomList/{chatRoomKey}.json")
+    suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String)
 
     companion object {
 
