@@ -7,7 +7,7 @@
 
         <variable
             name="clickListener"
-            type="com.nik.tkforum.util.ChatRoomClickListener" />
+            type="com.nik.tkforum.ui.chat.ChatRoomClickListener" />
 
         <variable
             name="chatRoomInfo"

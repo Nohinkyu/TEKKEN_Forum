@@ -15,7 +15,6 @@ import com.nik.tkforum.data.repository.VideoRepository
 import com.nik.tkforum.util.Constants
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.VideoClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

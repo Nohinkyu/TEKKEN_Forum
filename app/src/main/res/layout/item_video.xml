@@ -7,7 +7,7 @@
 
         <variable
             name="clickListener"
-            type="com.nik.tkforum.util.VideoClickListener" />
+            type="com.nik.tkforum.ui.video.VideoClickListener" />
 
         <variable
             name="video"

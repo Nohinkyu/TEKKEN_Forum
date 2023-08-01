@@ -1,4 +1,4 @@
-package com.nik.tkforum.util
+package com.nik.tkforum.ui.video
 
 interface VideoClickListener {
 

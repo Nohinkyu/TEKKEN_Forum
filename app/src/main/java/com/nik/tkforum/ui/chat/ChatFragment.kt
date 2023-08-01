@@ -16,7 +16,6 @@ import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatBinding
 import com.nik.tkforum.data.repository.ChatRoomListRepository
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.ChatRoomClickListener
 import com.nik.tkforum.util.Constants
 import kotlinx.coroutines.launch
 
