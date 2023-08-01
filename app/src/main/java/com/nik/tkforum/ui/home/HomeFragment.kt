@@ -6,23 +6,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
-import androidx.room.Room
+import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
+import com.nik.tkforum.data.model.CharacterData
 import com.nik.tkforum.data.repository.CharacterListRepository
-import com.nik.tkforum.data.source.local.AppDatabase
 import com.nik.tkforum.databinding.FragmentHomeBinding
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.Constants
 import kotlinx.coroutines.launch
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), CharacterClickListener {
 
     override val binding get() = _binding as FragmentHomeBinding
     override val layoutId: Int get() = R.layout.fragment_home
-    private val adapter = CharacterListAdapter()
+    private val adapter = CharacterListAdapter(this)
 
     private val viewModel by viewModels<CharacterListViewModel> {
         CharacterListViewModel.provideFactory(
@@ -80,6 +80,19 @@ class HomeFragment : BaseFragment() {
                     Lifecycle.State.STARTED
                 ).collect { characterList -> adapter.submitList(characterList) }
             }
+        }
+    }
+
+    override fun characterClick(characterData: CharacterData) {
+        val action = HomeFragmentDirections.actionNavHomeToNavFrameList(characterData)
+        if (characterData.moveList != null) {
+            findNavController().navigate(action)
+        } else {
+            Snackbar.make(
+                binding.root,
+                R.string.empty_data,
+                Snackbar.LENGTH_LONG
+            ).show()
         }
     }
 }

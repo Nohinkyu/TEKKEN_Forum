@@ -10,7 +10,8 @@ import com.nik.tkforum.databinding.ItemHeaderCharacterListBinding
 private const val ITEM_TYPE_HEADER = 0
 private const val ITEM_TYPE_CHARACTER = 1
 
-class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
+class CharacterListAdapter(private val clickListener: CharacterClickListener) :
+    RecyclerView.Adapter<ViewHolder>() {
 
     private val characterList = mutableListOf<CharacterListSection>()
 
@@ -39,7 +40,7 @@ class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
             is CharacterViewHolder -> {
                 val item = characterList[position] as CharacterListSection.Character
-                holder.bind(item)
+                holder.bind(item, clickListener)
             }
         }
     }
@@ -58,7 +59,7 @@ class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
     class HeaderViewHolder(val binding: ItemHeaderCharacterListBinding) : ViewHolder(binding.root) {
 
         fun bind(characterData: CharacterListSection.CharacterListHeader) {
-            binding.tvHeaderCharacterList.text = characterData.season
+            binding.season = characterData.season
         }
 
         companion object {
@@ -75,8 +76,12 @@ class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
     class CharacterViewHolder(val binding: ItemCharacterBinding) : ViewHolder(binding.root) {
 
-        fun bind(characterData: CharacterListSection.Character) {
+        fun bind(
+            characterData: CharacterListSection.Character,
+            clickListener: CharacterClickListener
+        ) {
             binding.characterInfo = characterData.character
+            binding.clickListener = clickListener
         }
 
         companion object {

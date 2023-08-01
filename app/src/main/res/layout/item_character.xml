@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="clickListener"
+            type="com.nik.tkforum.ui.home.CharacterClickListener" />
+
+        <variable
             name="characterInfo"
             type="com.nik.tkforum.data.model.CharacterData" />
 
@@ -13,7 +17,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.characterClick(characterInfo)}">
 
         <ImageView
             android:id="@+id/iv_character_image"
