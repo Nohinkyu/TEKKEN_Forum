@@ -17,9 +17,9 @@ object Constants {
 
     const val KAKAO_BASE_URL = "https://dapi.kakao.com/"
 
-    val SEVEN_SEASON_LIST = listOf<String>("SeasonCharacterList", "season1", "season2", "season3", "season4")
+    val SEVEN_SEASON_LIST = listOf<String>("FR ORIGIN", "SEASON 1", "SEASON 2", "SEASON 3", "SEASON 4")
 
-    val EIGHT_SEASON_LIST = listOf("8CharacterList")
+    val EIGHT_SEASON_LIST = listOf("8 ORIGIN")
 
     const val CHARACTER_DATA_BASE = "frame_data_data_base"
 }
