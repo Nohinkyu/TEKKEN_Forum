@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nik.tkforum.data.FrameData
+import com.nik.tkforum.data.model.FrameData
 import com.nik.tkforum.databinding.ItemFrameDataBinding
 
 class FrameListAdapter() :

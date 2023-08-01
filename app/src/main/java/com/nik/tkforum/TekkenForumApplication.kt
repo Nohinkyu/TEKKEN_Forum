@@ -1,8 +1,8 @@
 package com.nik.tkforum
 
 import android.app.Application
-import com.nik.tkforum.data.PreferenceManager
-import com.nik.tkforum.network.AppContainer
+import com.nik.tkforum.data.source.local.PreferenceManager
+import com.nik.tkforum.data.source.remote.network.AppContainer
 
 class TekkenForumApplication : Application() {
 

@@ -7,8 +7,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.nik.tkforum.BuildConfig
-import com.nik.tkforum.data.Video
-import com.nik.tkforum.repository.VideoRepository
+import com.nik.tkforum.data.model.Video
+import com.nik.tkforum.data.repository.VideoRepository
 import kotlinx.coroutines.flow.Flow
 
 class VideoViewModel(private val repository: VideoRepository) : ViewModel() {

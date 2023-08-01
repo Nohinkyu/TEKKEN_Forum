@@ -1,9 +1,9 @@
-package com.nik.tkforum.repository
+package com.nik.tkforum.data.repository
 
-import com.nik.tkforum.data.ChatRoom
-import com.nik.tkforum.data.User
-import com.nik.tkforum.network.ApiClient
-import com.nik.tkforum.network.ApiResponse
+import com.nik.tkforum.data.model.ChatRoom
+import com.nik.tkforum.data.model.User
+import com.nik.tkforum.data.source.remote.network.ApiClient
+import com.nik.tkforum.data.source.remote.network.ApiResponse
 
 class ChatRoomListRepository(private val apiClient: ApiClient) {
 

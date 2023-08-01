@@ -11,7 +11,7 @@
 
         <variable
             name="chatRoomInfo"
-            type="com.nik.tkforum.data.ChatRoomInfo" />
+            type="com.nik.tkforum.data.model.ChatRoomInfo" />
 
     </data>
 

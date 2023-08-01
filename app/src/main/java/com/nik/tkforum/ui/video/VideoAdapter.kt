@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nik.tkforum.databinding.ItemVideoBinding
-import com.nik.tkforum.data.Video
+import com.nik.tkforum.data.model.Video
 import com.nik.tkforum.util.VideoClickListener
 
 class VideoAdapter(private val clickListener: VideoClickListener) :

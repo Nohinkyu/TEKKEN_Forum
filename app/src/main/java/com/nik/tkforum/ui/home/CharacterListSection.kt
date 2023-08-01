@@ -1,6 +1,6 @@
 package com.nik.tkforum.ui.home
 
-import com.nik.tkforum.data.CharacterData
+import com.nik.tkforum.data.model.CharacterData
 
 const val CHARACTER_LIST_SEASON = 0
 const val CHARACTER_LIST_CHARACTER = 1

@@ -11,10 +11,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.data.Chat
-import com.nik.tkforum.data.User
+import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
-import com.nik.tkforum.repository.ChatRoomRepository
+import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
 import kotlinx.coroutines.launch

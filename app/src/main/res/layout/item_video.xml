@@ -11,7 +11,7 @@
 
         <variable
             name="video"
-            type="com.nik.tkforum.data.Video" />
+            type="com.nik.tkforum.data.model.Video" />
 
     </data>
 

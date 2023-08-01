@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.nik.tkforum.data.ChatRoom
-import com.nik.tkforum.data.ChatRoomInfo
-import com.nik.tkforum.data.User
-import com.nik.tkforum.network.ApiResultSuccess
-import com.nik.tkforum.repository.ChatRoomListRepository
+import com.nik.tkforum.data.model.ChatRoom
+import com.nik.tkforum.data.model.ChatRoomInfo
+import com.nik.tkforum.data.model.User
+import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
+import com.nik.tkforum.data.repository.ChatRoomListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

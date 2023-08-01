@@ -12,9 +12,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.data.Chat
-import com.nik.tkforum.network.ApiResultSuccess
-import com.nik.tkforum.repository.ChatRoomRepository
+import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
+import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.util.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

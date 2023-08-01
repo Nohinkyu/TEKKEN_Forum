@@ -1,5 +1,6 @@
-package com.nik.tkforum.data
+package com.nik.tkforum.data.model
 
+import com.nik.tkforum.data.model.CharacterData
 import java.io.Serializable
 
 data class SeasonCharacterList(

@@ -1,11 +1,10 @@
-package com.nik.tkforum.network
+package com.nik.tkforum.data.source.remote.network
 
-import com.nik.tkforum.data.Chat
-import com.nik.tkforum.data.ChatRoom
-import com.nik.tkforum.data.FrameData
-import com.nik.tkforum.data.SeasonCharacterList
-import com.nik.tkforum.data.User
-import com.nik.tkforum.data.VideoResponse
+import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.model.ChatRoom
+import com.nik.tkforum.data.model.SeasonCharacterList
+import com.nik.tkforum.data.model.User
+import com.nik.tkforum.data.model.VideoResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -54,8 +53,8 @@ interface ApiClient {
     @DELETE("chatRoomList/{chatRoomKey}.json")
     suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String): ApiResponse<Map<String, String>>
 
-    @GET("SeasonCharacterList.json")
-    suspend fun getSeasonCharacterList(): ApiResponse<SeasonCharacterList>
+    @GET("8CharacterList.json")
+    suspend fun getSeasonCharacterList() : Response<SeasonCharacterList>
 
     companion object {
 
