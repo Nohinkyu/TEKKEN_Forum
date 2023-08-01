@@ -8,5 +8,5 @@ import com.nik.tkforum.data.model.CharacterData
 data class CharacterListEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     val season: String,
-    val characterList: List<CharacterData>,
+    val characterList: List<CharacterData>?,
     )
