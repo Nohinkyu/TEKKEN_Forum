@@ -16,4 +16,10 @@ object Constants {
     val RECOMMENDED_VIDEO_TAG = listOf<String>("철권", "철권 프레임", "철권8", "철권7", "tekken")
 
     const val KAKAO_BASE_URL = "https://dapi.kakao.com/"
+
+    val SEVEN_SEASON_LIST = listOf<String>("SeasonCharacterList", "season1", "season2", "season3", "season4")
+
+    val EIGHT_SEASON_LIST = listOf("8CharacterList")
+
+    const val CHARACTER_DATA_BASE = "frame_data_data_base"
 }
