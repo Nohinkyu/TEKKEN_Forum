@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
 import com.nik.tkforum.databinding.ItemCharacterBinding
 import com.nik.tkforum.databinding.ItemHeaderCharacterListBinding
 
@@ -50,7 +49,8 @@ class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
         return characterList.size
     }
 
-    fun submitList(list: MutableList<CharacterListSection>) {
+    fun submitList(list: List<CharacterListSection>) {
+        characterList.clear()
         characterList.addAll(list)
         notifyDataSetChanged()
     }
@@ -76,8 +76,7 @@ class CharacterListAdapter() : RecyclerView.Adapter<ViewHolder>() {
     class CharacterViewHolder(val binding: ItemCharacterBinding) : ViewHolder(binding.root) {
 
         fun bind(characterData: CharacterListSection.Character) {
-            binding.tvCharacterName.text = characterData.character.characterName
-            binding.ivCharacterImage.load(characterData.character.characterImage)
+            binding.characterInfo = characterData.character
         }
 
         companion object {
