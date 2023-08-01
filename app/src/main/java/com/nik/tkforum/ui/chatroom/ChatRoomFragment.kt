@@ -10,15 +10,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.data.model.Chat
 import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
-import com.nik.tkforum.data.repository.ChatRoomRepository
+import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChatRoomFragment : BaseFragment() {
 
     override val binding get() = _binding as FragmentChatRoomBinding
@@ -26,19 +28,12 @@ class ChatRoomFragment : BaseFragment() {
 
     private val args: ChatRoomFragmentArgs by navArgs()
 
-    private val viewModel by viewModels<ChatRoomViewModel> {
-        ChatRoomViewModel.provideFactory(
-            repository = ChatRoomRepository(
-                TekkenForumApplication.appContainer.provideGoogleApiClient()
-            )
-        )
-    }
+    private val viewModel: ChatRoomViewModel by viewModels()
 
-    private val user = User(
-        TekkenForumApplication.preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-        TekkenForumApplication.preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-        TekkenForumApplication.preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-    )
+    private lateinit var preferencesManager: PreferenceManager
+
+    private lateinit var user: User
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +41,14 @@ class ChatRoomFragment : BaseFragment() {
         deleteChatRoom()
         setErrorMessage()
         sendErrorMessage()
+
+        preferencesManager = PreferenceManager(requireContext())
+
+        user = User(
+            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
+            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
+            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
+        )
         binding.chatRoomTitle = args.chatRoomHostName
         viewModel.addChatListener(args.chatRoomKey)
 

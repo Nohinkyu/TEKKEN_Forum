@@ -2,8 +2,9 @@ package com.nik.tkforum.data.source.local
 
 import android.content.Context
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.qualifiers.ApplicationContext
 
-class PreferenceManager(context: Context) {
+class PreferenceManager constructor(@ApplicationContext context: Context) {
 
     private val sharedPreferences =
         context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)

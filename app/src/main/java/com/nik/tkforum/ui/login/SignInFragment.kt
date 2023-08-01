@@ -20,12 +20,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.R
-import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.data.repository.SignInRepository
+import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.databinding.FragmentLoginBinding
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignInFragment : BaseFragment() {
 
     override val binding get() = _binding as FragmentLoginBinding
@@ -36,14 +38,11 @@ class SignInFragment : BaseFragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
 
-    private val viewModel by viewModels<SignInViewModel> {
-        SignInViewModel.provideFactory(
-            repository = SignInRepository(
-                TekkenForumApplication.appContainer.provideGoogleApiClient(),
-                TekkenForumApplication.database
-            )
-        )
-    }
+    private val viewModel: SignInViewModel by viewModels()
+
+    @Inject
+    lateinit var preferencesManager: PreferenceManager
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -150,7 +149,7 @@ class SignInFragment : BaseFragment() {
 
     private fun saveUserInfo() {
         val firebase = auth.currentUser
-        with(TekkenForumApplication.preferencesManager) {
+        with(preferencesManager) {
             putString(Constants.KEY_NICKNAME, firebase?.displayName.toString())
             putString(Constants.KEY_MAIL_ADDRESS, firebase?.email.toString())
             putString(Constants.KEY_PROFILE_IMAGE, firebase?.photoUrl.toString())

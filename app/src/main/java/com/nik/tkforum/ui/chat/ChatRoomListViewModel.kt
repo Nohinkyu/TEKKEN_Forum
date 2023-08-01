@@ -2,18 +2,22 @@ package com.nik.tkforum.ui.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.nik.tkforum.data.model.ChatRoom
 import com.nik.tkforum.data.model.ChatRoomInfo
 import com.nik.tkforum.data.model.User
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomListRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChatRoomListViewModel(private val repository: ChatRoomListRepository) : ViewModel() {
+@HiltViewModel
+class ChatRoomListViewModel @Inject constructor(
+    private val repository: ChatRoomListRepository,
+) :
+    ViewModel() {
 
     private val _chatRoomList = MutableStateFlow<List<ChatRoomInfo>>(emptyList())
     val chatRoomList: StateFlow<List<ChatRoomInfo>> = _chatRoomList
@@ -101,15 +105,6 @@ class ChatRoomListViewModel(private val repository: ChatRoomListRepository) : Vi
                 else -> {
                     _isError.value = true
                 }
-            }
-        }
-    }
-
-    companion object {
-
-        fun provideFactory(repository: ChatRoomListRepository) = viewModelFactory {
-            initializer {
-                ChatRoomListViewModel(repository)
             }
         }
     }

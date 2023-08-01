@@ -5,8 +5,12 @@ import com.nik.tkforum.data.source.local.AppDatabase
 import com.nik.tkforum.data.source.local.CharacterListEntity
 import com.nik.tkforum.data.source.remote.network.ApiClient
 import com.nik.tkforum.data.source.remote.network.ApiResponse
+import javax.inject.Inject
 
-class SignInRepository(private val apiClient: ApiClient ,private val database: AppDatabase) {
+class SignInRepository @Inject constructor(
+    private val apiClient: ApiClient,
+    private val database: AppDatabase
+) {
 
     private val dao = database.CharacterListDao()
 

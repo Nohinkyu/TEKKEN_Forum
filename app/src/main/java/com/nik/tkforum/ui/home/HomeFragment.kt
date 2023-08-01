@@ -11,24 +11,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.data.model.CharacterData
-import com.nik.tkforum.data.repository.CharacterListRepository
 import com.nik.tkforum.databinding.FragmentHomeBinding
 import com.nik.tkforum.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment(), CharacterClickListener {
 
     override val binding get() = _binding as FragmentHomeBinding
     override val layoutId: Int get() = R.layout.fragment_home
     private val adapter = CharacterListAdapter(this)
 
-    private val viewModel by viewModels<CharacterListViewModel> {
-        CharacterListViewModel.provideFactory(
-            repository = CharacterListRepository(TekkenForumApplication.database)
-        )
-    }
+    private val viewModel: CharacterListViewModel by viewModels()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

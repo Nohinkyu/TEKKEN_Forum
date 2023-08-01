@@ -13,6 +13,7 @@ class CharacterListTypeConverter {
     private val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
+
     private val listType = Types.newParameterizedType(List::class.java, CharacterData::class.java)
     private val adapter: JsonAdapter<List<CharacterData>> = moshi.adapter(listType)
     @TypeConverter

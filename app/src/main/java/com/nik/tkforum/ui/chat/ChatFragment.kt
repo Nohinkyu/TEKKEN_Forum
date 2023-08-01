@@ -9,38 +9,39 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.TekkenForumApplication.Companion.preferencesManager
 import com.nik.tkforum.data.model.ChatRoom
 import com.nik.tkforum.data.model.User
+import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.databinding.FragmentChatBinding
-import com.nik.tkforum.data.repository.ChatRoomListRepository
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ChatFragment : BaseFragment(), ChatRoomClickListener {
 
     override val binding get() = _binding as FragmentChatBinding
     override val layoutId: Int get() = R.layout.fragment_chat
 
-    private val viewModel by viewModels<ChatRoomListViewModel> {
-        ChatRoomListViewModel.provideFactory(
-            repository = ChatRoomListRepository(
-                TekkenForumApplication.appContainer.provideGoogleApiClient()
-            )
-        )
-    }
+    private val viewModel: ChatRoomListViewModel by viewModels()
 
-    private val user = User(
-        preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-        preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-        preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-    )
+    private lateinit var preferencesManager: PreferenceManager
+
+    private lateinit var user: User
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
+        preferencesManager = PreferenceManager(requireContext())
+
+        user = User(
+            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
+            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
+            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
+        )
+
+
         binding.tbChat.setOnMenuItemClickListener { menuItme ->
             when (menuItme.itemId) {
                 R.id.action_add_chat_room -> {
@@ -52,6 +53,7 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
             }
         }
     }
+
 
     private fun createChatRoom() {
         val chatRoom =

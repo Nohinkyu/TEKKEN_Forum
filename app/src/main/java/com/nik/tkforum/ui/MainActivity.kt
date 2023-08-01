@@ -10,7 +10,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.ActivityMainBinding
 import com.nik.tkforum.ui.home.HomeFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_video,
                 R.id.nav_chat,
                 R.id.nav_setting -> true
+
                 else -> false
             }
             binding.navMainBottom.visibility = if (shouldShowBottomNavigation) {
