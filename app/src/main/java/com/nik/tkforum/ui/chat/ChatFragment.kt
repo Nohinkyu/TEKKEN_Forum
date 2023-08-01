@@ -3,7 +3,11 @@ package com.nik.tkforum.ui.chat
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.TekkenForumApplication.Companion.preferencesManager
@@ -14,6 +18,7 @@ import com.nik.tkforum.repository.ChatRoomListRepository
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.ChatRoomClickListener
 import com.nik.tkforum.util.Constants
+import kotlinx.coroutines.launch
 
 class ChatFragment : BaseFragment(), ChatRoomClickListener {
 
@@ -54,21 +59,35 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
             ChatRoom(user.nickname, user.profileUri, mapOf(Constants.CREATOR_KET to user))
         viewModel.createChatRoom(chatRoom)
         viewModel.getCreateChatRoomKey()
-        viewModel.lastChatRoomKey.observe(viewLifecycleOwner) { lastChatRoomKey ->
-            findNavController().navigate(
-                ChatFragmentDirections.actionNavChatToNavChatRoom(
-                    lastChatRoomKey, user.nickname
-                )
+
+        lifecycleScope.launch {
+            viewModel.isGetChatRoomKey.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
             )
+                .collect { isGetChatRoomKey ->
+                    if (isGetChatRoomKey) {
+                        findNavController().navigate(
+                            ChatFragmentDirections.actionNavChatToNavChatRoom(
+                                viewModel.lastChatRoomKey.value, user.nickname
+                            )
+                        )
+                    }
+                }
         }
     }
 
     private fun setLayout() {
+        setErrorMessage()
         val adapter = ChatRoomListAdapter(this)
         binding.rvChatRoomList.adapter = adapter
         viewModel.loadAllChatRoom()
-        viewModel.chatRoomList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        lifecycleScope.launch {
+            viewModel.chatRoomList.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            )
+                .collect { chatRoomList -> adapter.submitList(chatRoomList) }
         }
     }
 
@@ -76,5 +95,23 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
         val action = ChatFragmentDirections.actionNavChatToNavChatRoom(chatRoomKey, hostName)
         findNavController().navigate(action)
         viewModel.joinUser(chatRoomKey, user)
+    }
+
+    private fun setErrorMessage() {
+        lifecycleScope.launch {
+            viewModel.isError.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            )
+                .collect { isError ->
+                    if (isError) {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.network_error_message,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                }
+        }
     }
 }

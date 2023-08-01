@@ -31,31 +31,31 @@ interface ApiClient {
     ): VideoResponse
 
     @GET("chatRoomList/{chatRoomKey}/chatList.json")
-    suspend fun getChatList(@Path("chatRoomKey") chatRoomKey: String): Response<Map<String, Chat>>
+    suspend fun getChatList(@Path("chatRoomKey") chatRoomKey: String): ApiResponse<Map<String, Chat>>
 
     @POST("chatRoomList/{chatRoomKey}/chatList.json")
     suspend fun sendChat(
         @Path("chatRoomKey") chatRoomKey: String,
         @Body chat: Chat
-    ): Response<Map<String, String>>
+    ): ApiResponse<Map<String, String>>
 
     @POST("chatRoomList/{chatRoomKey}/userList.json")
     suspend fun joinUser(
         @Path("chatRoomKey") chatRoomKey: String,
         @Body user: User
-    ): Response<Map<String, String>>
+    ): ApiResponse<Map<String, String>>
 
     @POST("chatRoomList.json")
-    suspend fun createChatRoom(@Body chatRoom: ChatRoom): Response<Map<String, String>>
+    suspend fun createChatRoom(@Body chatRoom: ChatRoom): ApiResponse<Map<String, String>>
 
     @GET("chatRoomList.json")
-    suspend fun getChatRoomList(): Response<Map<String, ChatRoom>>
+    suspend fun getChatRoomList(): ApiResponse<Map<String, ChatRoom>>
 
     @DELETE("chatRoomList/{chatRoomKey}.json")
-    suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String)
+    suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String): ApiResponse<Map<String, String>>
 
     @GET("SeasonCharacterList.json")
-    suspend fun getSeasonCharacterList() :Response<SeasonCharacterList>
+    suspend fun getSeasonCharacterList(): ApiResponse<SeasonCharacterList>
 
     companion object {
 
@@ -74,6 +74,7 @@ interface ApiClient {
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addCallAdapterFactory(ApiCallAdapterFactory.create())
                 .build()
                 .create(ApiClient::class.java)
         }
