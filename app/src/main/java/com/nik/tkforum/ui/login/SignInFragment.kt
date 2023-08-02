@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
@@ -38,11 +37,8 @@ class SignInFragment : BaseFragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
 
-    private val viewModel: SignInViewModel by viewModels()
-
     @Inject
     lateinit var preferencesManager: PreferenceManager
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,14 +72,12 @@ class SignInFragment : BaseFragment() {
                     activityResultLauncher.launch(
                         IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     )
-                    viewModel.getSevenCharacterList()
-                    viewModel.getEightCharacterList()
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.e(TAG, "sign-in error: ${e.localizedMessage}")
+                    Log.e("LoginFragment", "sign-in error: ${e.localizedMessage}")
                 }
             }
             .addOnFailureListener(requireActivity()) { e ->
-                Log.d(TAG, "sign-in fail: ${e.localizedMessage}")
+                Log.d("LoginFragment", "sign-in fail: ${e.localizedMessage}")
                 legacySignIn()
             }
             .addOnCanceledListener {
@@ -101,7 +95,7 @@ class SignInFragment : BaseFragment() {
                         if (idToken != null) {
                             firebaseAuthWithGoogle(idToken)
                         } else {
-                            Log.d(TAG, "No ID token")
+                            Log.d("LoginFragment", "No ID token")
                         }
                     } catch (e: ApiException) {
                         legacySignIn()
@@ -118,10 +112,10 @@ class SignInFragment : BaseFragment() {
                 if (task.isSuccessful) {
                     findNavController().navigate(action)
                     saveUserInfo()
-                    Log.d(TAG, "login")
+                    Log.d("LoginFragment", "login")
                 } else {
                     Toast.makeText(context, task.exception?.message, Toast.LENGTH_LONG).show()
-                    Log.d(TAG, "${task.exception?.message}")
+                    Log.d("LoginFragment", "${task.exception?.message}")
                 }
             }
     }
@@ -137,13 +131,11 @@ class SignInFragment : BaseFragment() {
                     activityResultLauncher.launch(
                         IntentSenderRequest.Builder(result.intentSender).build()
                     )
-                    viewModel.getSevenCharacterList()
-                    viewModel.getEightCharacterList()
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.e(TAG, "Google Sign-in failed")
+                    Log.e("LoginFragment", "Google Sign-in failed")
                 }
             }.addOnFailureListener { e ->
-                Log.e(TAG, "legacySignIn: ", e)
+                Log.e("LoginFragment", "legacySignIn: ", e)
             }
     }
 
@@ -154,9 +146,5 @@ class SignInFragment : BaseFragment() {
             putString(Constants.KEY_MAIL_ADDRESS, firebase?.email.toString())
             putString(Constants.KEY_PROFILE_IMAGE, firebase?.photoUrl.toString())
         }
-    }
-
-    companion object {
-        private const val TAG = "LoginFragment"
     }
 }
