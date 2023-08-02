@@ -31,6 +31,7 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setSevenCharacterList()
+        getFrameData()
 
         binding.ibEight.setOnClickListener {
             setEightCharacterList()
@@ -90,6 +91,15 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
                 R.string.empty_data,
                 Snackbar.LENGTH_LONG
             ).show()
+        }
+    }
+
+    private fun getFrameData() {
+        lifecycleScope.launch {
+            if (!viewModel.isEightCharacterSave.value && !viewModel.isEightCharacterSave.value) {
+                viewModel.getSevenCharacterList()
+                viewModel.getEightCharacterList()
+            }
         }
     }
 }
