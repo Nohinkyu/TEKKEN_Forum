@@ -19,8 +19,8 @@ android {
         applicationId "com.nik.tkforum"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
         buildConfigField "String", "GOOGLE_CLIENT_ID", properties["google_client_id"]
         buildConfigField "String", "KAKAO_API_KEY", properties["kakao_api_key"]
