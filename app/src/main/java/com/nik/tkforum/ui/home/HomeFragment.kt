@@ -95,11 +95,8 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
     }
 
     private fun getFrameData() {
-        lifecycleScope.launch {
-            if (!viewModel.isEightCharacterSave.value && !viewModel.isEightCharacterSave.value) {
-                viewModel.getSevenCharacterList()
-                viewModel.getEightCharacterList()
-            }
+        if (viewModel.characterList.value.isEmpty()) {
+            viewModel.getCharacterList()
         }
     }
 }

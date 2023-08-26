@@ -26,11 +26,8 @@ class CharacterListViewModel @Inject constructor(
     private val _isEightLoad: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isEightLoad: StateFlow<Boolean> = _isEightLoad
 
-    private val _isSevenCharacterSave: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isSevenCharacterSave: StateFlow<Boolean> = _isSevenCharacterSave
-
-    private val _isEightCharacterSave: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isEightCharacterSave: StateFlow<Boolean> = _isEightCharacterSave
+    private val _isCharacterSave: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isCharacterSave: StateFlow<Boolean> = _isCharacterSave
 
     fun loadSevenCharacterList() {
         viewModelScope.launch {
@@ -76,9 +73,9 @@ class CharacterListViewModel @Inject constructor(
         }
     }
 
-    fun getSevenCharacterList() {
+    fun getCharacterList() {
         viewModelScope.launch {
-            for (season in Constants.SEVEN_SEASON_LIST) {
+            for (season in Constants.SERIES_LIST) {
                 when (val response = repository.getSeasonCharacterList(season)) {
                     is ApiResultSuccess -> {
                         val entity = CharacterListEntity(
@@ -89,32 +86,11 @@ class CharacterListViewModel @Inject constructor(
                     }
 
                     else -> {
-                        _isSevenCharacterSave.value = false
+                        _isCharacterSave.value = false
                     }
                 }
             }
-            _isSevenCharacterSave.value = true
-        }
-    }
-
-    fun getEightCharacterList() {
-        viewModelScope.launch {
-            for (season in Constants.EIGHT_SEASON_LIST) {
-                when (val response = repository.getSeasonCharacterList(season)) {
-                    is ApiResultSuccess -> {
-                        val entity = CharacterListEntity(
-                            season = response.data.season,
-                            characterList = response.data.characterList
-                        )
-                        repository.insertCharacterList(entity)
-                    }
-
-                    else -> {
-                        _isEightCharacterSave.value = false
-                    }
-                }
-            }
-            _isEightCharacterSave.value = true
+            _isCharacterSave.value = true
         }
     }
 }
