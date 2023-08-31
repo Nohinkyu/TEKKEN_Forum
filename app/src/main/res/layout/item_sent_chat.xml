@@ -13,52 +13,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_sent_chat_profile"
-            imageUrlCircle="@{chat.profileImage}"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_sent_chat"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@color/black" />
-
-        <TextView
-            android:id="@+id/tv_sent_chat_nickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="end"
-            android:text="@{chat.senderNickname}"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toStartOf="@id/iv_sent_chat_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_sent_chat_profile"
-            tools:text="체리 베리 망고" />
+        android:layout_height="wrap_content"
+        tools:background="@color/black">
 
         <TextView
             android:id="@+id/tv_sent_chat"
             android:layout_width="0dp"
+            android:maxWidth="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
-            android:gravity="end"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:background="@drawable/background_send_chat"
+            android:gravity="start|center_vertical"
             android:text="@{chat.message}"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_sent_chat_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_sent_chat_nickname"
-            tools:text="안녕하세요~~" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="안녕하세요~~안녕하세요~~안녕하세요~~안녕하세요~~안녕하세요~~" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
