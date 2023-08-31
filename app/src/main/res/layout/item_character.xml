@@ -18,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.characterClick(characterInfo)}">
+        android:onClick="@{() -> clickListener.characterClick(characterInfo)}"
+        tools:background="@color/black_appbar">
 
         <ImageView
             android:id="@+id/iv_character_image"
@@ -43,7 +44,7 @@
             android:layout_marginStart="4dp"
             android:text="@{characterInfo.characterName}"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="@id/iv_character_image"
             app:layout_constraintStart_toStartOf="@id/iv_character_image"
             app:layout_constraintTop_toTopOf="@id/iv_character_image"
