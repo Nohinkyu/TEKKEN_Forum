@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.model.User
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.data.source.local.PreferenceManager
@@ -27,8 +28,10 @@ class ChatRoomViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val senderEmail = preferenceManager.getString(
-        Constants.KEY_MAIL_ADDRESS, ""
+    private val userInfo = User(
+        preferenceManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
+        preferenceManager.getString(Constants.KEY_NICKNAME, ""),
+        preferenceManager.getString(Constants.KEY_MAIL_ADDRESS, "")
     )
 
     private var chatListener: ChildEventListener? = null
@@ -54,7 +57,7 @@ class ChatRoomViewModel @Inject constructor(
             when (response) {
                 is ApiResultSuccess -> {
                     for (chat in response.data.values) {
-                        if (chat.senderEmail == senderEmail) {
+                        if (chat.senderEmail == userInfo.email) {
                             chatTypeList.add(ChatType.SentChat(chat))
                         } else {
                             chatTypeList.add(ChatType.ReceivedChat(chat))
@@ -70,7 +73,8 @@ class ChatRoomViewModel @Inject constructor(
         }
     }
 
-    fun sendChat(chatRoomKey: String, chat: Chat) {
+    fun sendChat(chatRoomKey: String, message: String) {
+        val chat = Chat(userInfo.profileUri, userInfo.nickname, message, userInfo.email)
         viewModelScope.launch {
             when (repository.sendChat(chatRoomKey, chat)) {
                 is ApiResultSuccess -> {
@@ -91,7 +95,7 @@ class ChatRoomViewModel @Inject constructor(
             .addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
                     val newMessage = dataSnapshot.getValue(Chat::class.java) ?: return
-                    if (newMessage.senderEmail == senderEmail) {
+                    if (newMessage.senderEmail == userInfo.email) {
                         chatTypeList.add(ChatType.SentChat(newMessage))
                     } else {
                         chatTypeList.add(ChatType.ReceivedChat(newMessage))

@@ -10,15 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.data.model.Chat
 import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
-import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatRoomFragment : BaseFragment() {
@@ -30,8 +26,6 @@ class ChatRoomFragment : BaseFragment() {
 
     private val viewModel: ChatRoomViewModel by viewModels()
 
-    private lateinit var preferencesManager: PreferenceManager
-
     private lateinit var user: User
 
 
@@ -42,13 +36,6 @@ class ChatRoomFragment : BaseFragment() {
         setErrorMessage()
         sendErrorMessage()
 
-        preferencesManager = PreferenceManager(requireContext())
-
-        user = User(
-            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-        )
         binding.chatRoomTitle = args.chatRoomHostName
         viewModel.addChatListener(args.chatRoomKey)
 
@@ -72,13 +59,7 @@ class ChatRoomFragment : BaseFragment() {
     }
 
     private fun sendChat() {
-        val chat = Chat(
-            user.profileUri,
-            user.nickname,
-            binding.etChat.text.toString(),
-            user.email
-        )
-        viewModel.sendChat(args.chatRoomKey, chat)
+        viewModel.sendChat(args.chatRoomKey, binding.etChat.text.toString())
     }
 
     private fun sendErrorMessage() {
