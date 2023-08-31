@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient">
+        tools:background="@drawable/background_gradient">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_home"
@@ -22,8 +22,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/character_list"
             app:titleMarginStart="16dp"
-            app:titleTextColor="@color/white"
-            app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
+            app:titleTextAppearance="@style/TopAppbarTitleTextStyle"
+            app:titleTextColor="@color/white" />
 
         <ImageButton
             android:id="@+id/ib_seven"
