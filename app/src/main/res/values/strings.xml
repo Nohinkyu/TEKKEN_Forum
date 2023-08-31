@@ -30,4 +30,5 @@
     <string name="network_error_message">네트워크 연결 상태를 확인 해주세요</string>
     <string name="send_error_message">메시지 전송에 실패했습니다</string>
     <string name="empty_data">추후 데이터 추가 예정 입니다.</string>
+    <string name="hint_et_chat_room">메시지 입력</string>
 </resources>
