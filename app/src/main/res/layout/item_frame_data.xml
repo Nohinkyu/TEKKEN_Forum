@@ -5,28 +5,26 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tv_move_name"
-        android:layout_width="120dp"
+        style="@style/FrameDataStyle"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom_less"
         android:gravity="center"
+        android:padding="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="초풍" />
 
     <TextView
         android:id="@+id/tv_move_command"
-        android:layout_width="120dp"
+        style="@style/FrameDataStyle"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_top_less"
         android:gravity="center"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_move_name"
@@ -34,21 +32,25 @@
 
     <TextView
         android:id="@+id/tv_move_start"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_move_command"
         app:layout_constraintStart_toEndOf="@id/tv_move_command"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="13" />
 
     <TextView
         android:id="@+id/tv_move_grad"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_move_start"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,10 +58,12 @@
 
     <TextView
         android:id="@+id/tv_move_hit"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_move_grad"
         app:layout_constraintTop_toTopOf="parent"
@@ -67,10 +71,12 @@
 
     <TextView
         android:id="@+id/tv_move_counter"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_move_hit"
         app:layout_constraintTop_toTopOf="parent"
@@ -78,10 +84,12 @@
 
     <TextView
         android:id="@+id/tv_move_hit_level"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_move_counter"
         app:layout_constraintTop_toTopOf="parent"
@@ -89,21 +97,16 @@
 
     <TextView
         android:id="@+id/tv_move_damage"
+        style="@style/FrameDataStyle"
         android:layout_width="60dp"
         android:layout_height="0dp"
         android:background="@drawable/border"
         android:gravity="center"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_move_hit_level"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="30" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
