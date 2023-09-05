@@ -24,7 +24,7 @@ class VideoAdapter(private val clickListener: VideoClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(video: Video, clickListener: VideoClickListener) {
             binding.video = video
-            binding.clickListner = clickListener
+            binding.clickListener = clickListener
         }
 
         companion object {

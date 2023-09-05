@@ -1,6 +1,8 @@
 package com.nik.tkforum.network
 
 import com.nik.tkforum.data.Chat
+import com.nik.tkforum.data.ChatRoom
+import com.nik.tkforum.data.User
 import com.nik.tkforum.data.VideoResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -10,9 +12,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiClient {
@@ -24,11 +28,29 @@ interface ApiClient {
         @Query("page") page: Int
     ): VideoResponse
 
-    @GET("chatList.json")
-    suspend fun getChatList(): Response<Map<String, Chat>>
+    @GET("chatRoomList/{chatRoomKey}/chatList.json")
+    suspend fun getChatList(@Path("chatRoomKey") chatRoomKey: String): Response<Map<String, Chat>>
 
-    @POST("chatList.json")
-    suspend fun sendChat(@Body chat: Chat): Response<Map<String,String>>
+    @POST("chatRoomList/{chatRoomKey}/chatList.json")
+    suspend fun sendChat(
+        @Path("chatRoomKey") chatRoomKey: String,
+        @Body chat: Chat
+    ): Response<Map<String, String>>
+
+    @POST("chatRoomList/{chatRoomKey}/userList.json")
+    suspend fun joinUser(
+        @Path("chatRoomKey") chatRoomKey: String,
+        @Body user: User
+    ): Response<Map<String, String>>
+
+    @POST("chatRoomList.json")
+    suspend fun createChatRoom(@Body chatRoom: ChatRoom): Response<Map<String, String>>
+
+    @GET("chatRoomList.json")
+    suspend fun getChatRoomList(): Response<Map<String, ChatRoom>>
+
+    @DELETE("chatRoomList/{chatRoomKey}.json")
+    suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String)
 
     companion object {
 

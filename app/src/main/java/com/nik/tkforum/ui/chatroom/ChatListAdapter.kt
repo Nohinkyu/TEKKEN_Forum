@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.nik.tkforum.databinding.ItemReceivedChatBinding
 import com.nik.tkforum.databinding.ItemSentChatBinding
 
@@ -47,12 +45,8 @@ class ChatListAdapter : ListAdapter<ChatType, ViewHolder>(ChatTypeDiffUtil()) {
     class ReceivedChatViewHolder(val binding: ItemReceivedChatBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(item: ChatType.ReceivedChat) {
-            binding.tvRecivedChat.text = item.chat.message
-            binding.tvReceivedChatNickname.text = item.chat.senderNickname
-            binding.ivReceivedChatProfile.load(item.chat.profileImage) {
-                transformations(CircleCropTransformation())
-            }
+        fun bind(chatInfo: ChatType.ReceivedChat) {
+            binding.chat = chatInfo.chat
         }
 
         companion object {
@@ -70,12 +64,8 @@ class ChatListAdapter : ListAdapter<ChatType, ViewHolder>(ChatTypeDiffUtil()) {
     class SentChatViewHolder(val binding: ItemSentChatBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(item: ChatType.SentChat) {
-            binding.tvSentChat.text = item.chat.message
-            binding.tvSentChatNickname.text = item.chat.senderNickname
-            binding.ivSentChatProfile.load(item.chat.profileImage) {
-                transformations(CircleCropTransformation())
-            }
+        fun bind(chatInfo: ChatType.SentChat) {
+            binding.chat = chatInfo.chat
         }
 
         companion object {

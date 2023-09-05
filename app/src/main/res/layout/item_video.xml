@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="clickListner"
+            name="clickListener"
             type="com.nik.tkforum.util.VideoClickListener" />
 
         <variable
@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:onClick="@{() -> clickListner.onClick(video.url)}">
+        android:onClick="@{() -> clickListener.onClick(video.url)}">
 
         <ImageView
             android:id="@+id/iv_video_thumbnail"

@@ -1,66 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_chat_thumbnail"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_search" />
+    <data>
 
-    <TextView
-        android:id="@+id/tv_chat_title"
-        android:layout_width="0dp"
+        <variable
+            name="clickListener"
+            type="com.nik.tkforum.util.ChatRoomClickListener" />
+
+        <variable
+            name="chatRoomInfo"
+            type="com.nik.tkforum.data.ChatRoomInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/iv_chat_thumbnail"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="네간 유저 톡방" />
+        android:onClick="@{() -> clickListener.chatRoomClick(chatRoomInfo.key,chatRoomInfo.chatRoom.createUserName)}">
 
-    <TextView
-        android:id="@+id/tv_chat_user_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_chat_title"
-        app:layout_constraintStart_toEndOf="@id/tv_chat_title"
-        app:layout_constraintTop_toTopOf="@id/tv_chat_title"
-        tools:text="100명" />
+        <ImageView
+            android:id="@+id/iv_chat_thumbnail"
+            imageUrlCircle="@{chatRoomInfo.chatRoom.createUserProfile}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_search" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tv_chat_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_chat_title"
-        tools:text="안녕하세요~" />
+        <TextView
+            android:id="@+id/tv_chat_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text='@{chatRoomInfo.chatRoom.createUserName + " 님의 방입니다"}'
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_chat_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="네간 유저 톡방" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tv_chat_user_count"
+            userCount="@{chatRoomInfo.chatRoom.userList.size()}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_chat_title"
+            app:layout_constraintStart_toEndOf="@id/tv_chat_title"
+            app:layout_constraintTop_toTopOf="@id/tv_chat_title"
+            tools:text="100명" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_last_chat"
+            lastChat="@{chatRoomInfo}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_chat_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_title"
+            tools:text="안녕하세요~" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
