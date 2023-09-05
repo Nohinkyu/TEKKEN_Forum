@@ -20,4 +20,9 @@
     <string name="frame_header_counter">카운터</string>
     <string name="frame_header_hit_level">판정</string>
     <string name="frame_header_damage">데미지</string>
+    <string name="profile_info">프로필 정보</string>
+    <string name="nickname">닉네임</string>
+    <string name="mail">이메일</string>
+    <string name="download_frame_data">프레임 데이터 다시 받기</string>
+    <string name="survey">고객 의견</string>
 </resources>
