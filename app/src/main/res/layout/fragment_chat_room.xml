@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_fragment_chat_room"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#264C5D">
@@ -47,7 +48,8 @@
             app:layout_constraintBottom_toTopOf="@id/et_chat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_chat_room" />
+            app:layout_constraintTop_toBottomOf="@id/tb_chat_room"
+            app:stackFromEnd="true" />
 
         <View
             android:layout_width="0dp"
