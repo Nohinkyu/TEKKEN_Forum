@@ -1,20 +1,12 @@
 package com.nik.tkforum.ui.chatroom
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.data.model.Chat
-import com.nik.tkforum.data.model.User
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomRepository
-import com.nik.tkforum.data.source.local.PreferenceManager
-import com.nik.tkforum.util.Constants
+import com.nik.tkforum.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,25 +16,17 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatRoomViewModel @Inject constructor(
     private val repository: ChatRoomRepository,
-    private val preferenceManager: PreferenceManager
+    private val userRepository: UserRepository,
 ) :
     ViewModel() {
 
-    private val userInfo = User(
-        preferenceManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-        preferenceManager.getString(Constants.KEY_NICKNAME, ""),
-        preferenceManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-    )
-
     private var chatListener: ChildEventListener? = null
 
-    private val dataBase = FirebaseDatabase.getInstance(BuildConfig.GOOGLE_BASE_URL)
+    private val _chatList = MutableStateFlow<List<Chat>>(emptyList())
+    val chatList: StateFlow<List<Chat>> = _chatList
 
-    private val _chatList = MutableLiveData<List<ChatType>>()
-    val chatList: LiveData<List<ChatType>> = _chatList
-
-    private val _loadingError: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val loadingError: StateFlow<Boolean> = _loadingError
+    private val _isLoading: MutableStateFlow<Boolean?> = MutableStateFlow(null)
+    val isLoading: StateFlow<Boolean?> = _isLoading
 
     private val _sendError: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val sendError: StateFlow<Boolean> = _sendError
@@ -50,26 +34,23 @@ class ChatRoomViewModel @Inject constructor(
     private val _deleteError: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val deleteError: StateFlow<Boolean> = _deleteError
 
+    private val _isChatRoomHost: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isChatRoomHost: StateFlow<Boolean> = _isChatRoomHost
+
+    private val _isSuccessDeleteChatRoom: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isSuccessDeleteChatRoom: StateFlow<Boolean> = _isSuccessDeleteChatRoom
+
+    val userInfo = userRepository.getUserInfo()
+
     fun loadChatList(chatRoomKey: String) {
         viewModelScope.launch {
-            val response = repository.getChatList(chatRoomKey)
-            val chatTypeList = mutableListOf<ChatType>()
-            when (response) {
-                is ApiResultSuccess -> {
-                    for (chat in response.data.values) {
-                        if (chat.senderEmail == userInfo.email) {
-                            chatTypeList.add(ChatType.SentChat(chat))
-                        } else {
-                            chatTypeList.add(ChatType.ReceivedChat(chat))
-                        }
-                    }
-                }
-
-                else -> {
-                    _loadingError.value = true
-                }
-            }
-            _chatList.value = chatTypeList
+            repository.getChatList(
+                onComplete = { _isLoading.value = true },
+                onError = { code, message ->
+                    _isLoading.value = code == 200
+                },
+                chatRoomKey
+            ).collect { }
         }
     }
 
@@ -89,42 +70,34 @@ class ChatRoomViewModel @Inject constructor(
     }
 
     fun addChatListener(chatRoomKey: String) {
-        val chatTypeList = mutableListOf<ChatType>()
-        chatListener = dataBase.getReference("chatRoomList")
-            .child(chatRoomKey).child("chatList")
-            .addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
-                    val newMessage = dataSnapshot.getValue(Chat::class.java) ?: return
-                    if (newMessage.senderEmail == userInfo.email) {
-                        chatTypeList.add(ChatType.SentChat(newMessage))
-                    } else {
-                        chatTypeList.add(ChatType.ReceivedChat(newMessage))
-                    }
-                    _chatList.value = chatTypeList
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+        viewModelScope.launch {
+            chatListener = repository.addChatListener(chatRoomKey) { chat ->
+                val currentList = _chatList.value
+                val newList = currentList.toMutableList().apply { add(chat) }
+                _chatList.value = newList
+            }
+        }
     }
 
-    fun deleteChatRoom(chatRoomKey: String) {
-        viewModelScope.launch {
-            when (repository.deleteChatRoom(chatRoomKey)) {
-                is ApiResultSuccess -> {
-                    _deleteError.value = false
-                }
+    fun deleteChatRoom(chatRoomKey: String, creatorUserName: String) {
+        if (creatorUserName == userInfo.nickname) {
+            _isChatRoomHost.value = false
+            userRepository.deleteChatRoom()
+            viewModelScope.launch {
+                when (repository.deleteChatRoom(chatRoomKey)) {
+                    is ApiResultSuccess -> {
+                        _deleteError.value = false
+                        _isSuccessDeleteChatRoom.value = true
+                    }
 
-                else -> {
-                    _deleteError.value = true
+                    else -> {
+                        _deleteError.value = true
+                        _isSuccessDeleteChatRoom.value = false
+                    }
                 }
             }
+        } else {
+            _isChatRoomHost.value = true
         }
     }
 

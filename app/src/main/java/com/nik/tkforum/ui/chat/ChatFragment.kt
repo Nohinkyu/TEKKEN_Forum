@@ -9,12 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.data.model.ChatRoom
-import com.nik.tkforum.data.model.User
-import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.databinding.FragmentChatBinding
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,21 +22,9 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
 
     private val viewModel: ChatRoomListViewModel by viewModels()
 
-    private lateinit var preferencesManager: PreferenceManager
-
-    private lateinit var user: User
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
-        preferencesManager = PreferenceManager(requireContext())
-
-        user = User(
-            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-        )
-
 
         binding.tbChat.setOnMenuItemClickListener { menuItme ->
             when (menuItme.itemId) {
@@ -56,25 +40,31 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
 
 
     private fun createChatRoom() {
-        val chatRoom =
-            ChatRoom(user.nickname, user.profileUri, mapOf(Constants.CREATOR_KET to user))
-        viewModel.createChatRoom(chatRoom)
-        viewModel.getCreateChatRoomKey()
-
-        lifecycleScope.launch {
-            viewModel.isGetChatRoomKey.flowWithLifecycle(
-                viewLifecycleOwner.lifecycle,
-                Lifecycle.State.STARTED
-            )
-                .collect { isGetChatRoomKey ->
-                    if (isGetChatRoomKey) {
-                        findNavController().navigate(
-                            ChatFragmentDirections.actionNavChatToNavChatRoom(
-                                viewModel.lastChatRoomKey.value, user.nickname
+        viewModel.checkChatRoom()
+        if (viewModel.isChatRoom.isBlank()) {
+            viewModel.createChatRoom()
+            viewModel.getCreateChatRoomKey()
+            lifecycleScope.launch {
+                viewModel.isGetChatRoomKey.flowWithLifecycle(
+                    viewLifecycleOwner.lifecycle,
+                    Lifecycle.State.STARTED
+                )
+                    .collect { isGetChatRoomKey ->
+                        if (isGetChatRoomKey) {
+                            findNavController().navigate(
+                                ChatFragmentDirections.actionNavChatToNavChatRoom(
+                                    viewModel.lastChatRoomKey.value, viewModel.userInfo.nickname
+                                )
                             )
-                        )
+                        }
                     }
-                }
+            }
+        } else if (viewModel.isChatRoom.isNotBlank()) {
+            Snackbar.make(
+                binding.root,
+                R.string.is_chat_room_message,
+                Snackbar.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -95,7 +85,7 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
     override fun chatRoomClick(chatRoomKey: String, hostName: String) {
         val action = ChatFragmentDirections.actionNavChatToNavChatRoom(chatRoomKey, hostName)
         findNavController().navigate(action)
-        viewModel.joinUser(chatRoomKey, user)
+        viewModel.joinUser(chatRoomKey)
     }
 
     private fun setErrorMessage() {
