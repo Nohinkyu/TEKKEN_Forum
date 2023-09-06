@@ -20,6 +20,13 @@ class PreferenceManager constructor(@ApplicationContext context: Context) {
         return sharedPreferences.getString(key, defValue) ?: defValue
     }
 
+    fun removeString(key: String) {
+        with(sharedPreferences.edit()) {
+            remove(key)
+            apply()
+        }
+    }
+
     fun clear() {
         with(sharedPreferences.edit()) {
             clear()
