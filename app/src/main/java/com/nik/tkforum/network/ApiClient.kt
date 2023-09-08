@@ -2,6 +2,8 @@ package com.nik.tkforum.network
 
 import com.nik.tkforum.data.Chat
 import com.nik.tkforum.data.ChatRoom
+import com.nik.tkforum.data.FrameData
+import com.nik.tkforum.data.SeasonCharacterList
 import com.nik.tkforum.data.User
 import com.nik.tkforum.data.VideoResponse
 import com.squareup.moshi.Moshi
@@ -51,6 +53,9 @@ interface ApiClient {
 
     @DELETE("chatRoomList/{chatRoomKey}.json")
     suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String)
+
+    @GET("SeasonCharacterList.json")
+    suspend fun getSeasonCharacterList() :Response<SeasonCharacterList>
 
     companion object {
 

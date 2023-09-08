@@ -1,7 +1,9 @@
 package com.nik.tkforum.data
 
+import java.io.Serializable
+
 data class CharacterData(
     val characterName: String?,
-    val characterImage: Int,
-    val moveList: List<FrameData>?,
-)
+    val characterImage: String,
+    val moveList: Map<String, FrameData>?,
+) : Serializable
