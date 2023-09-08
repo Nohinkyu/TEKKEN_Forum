@@ -26,11 +26,10 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
 
     private val viewModel: CharacterListViewModel by viewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setSevenCharacterList()
+        setCharacterList()
         getFrameData()
 
         binding.ibEight.setOnClickListener {
@@ -81,6 +80,14 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
         }
     }
 
+    private fun setCharacterList() {
+        if (viewModel.isSeriesSwitchCheck.isNotBlank()) {
+            setEightCharacterList()
+        } else {
+            setSevenCharacterList()
+        }
+    }
+
     override fun characterClick(characterData: CharacterData) {
         val action = HomeFragmentDirections.actionNavHomeToNavFrameList(characterData)
         if (characterData.moveList != null) {
@@ -90,13 +97,12 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
                 binding.root,
                 R.string.empty_data,
                 Snackbar.LENGTH_LONG
-            ).show()
+            ).setAction(R.string.close_snack_bar) {
+            }.show()
         }
     }
 
     private fun getFrameData() {
-        if (viewModel.characterList.value.isEmpty()) {
-            viewModel.getCharacterList()
-        }
+        viewModel.getCharacterList()
     }
 }
