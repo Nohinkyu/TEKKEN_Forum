@@ -38,7 +38,6 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
         }
     }
 
-
     private fun createChatRoom() {
         viewModel.checkChatRoom()
         if (viewModel.isChatRoom.isBlank()) {
@@ -64,7 +63,8 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
                 binding.root,
                 R.string.is_chat_room_message,
                 Snackbar.LENGTH_LONG
-            ).show()
+            ).setAction(R.string.close_snack_bar) {
+            }.show()
         }
     }
 
@@ -100,7 +100,8 @@ class ChatFragment : BaseFragment(), ChatRoomClickListener {
                             binding.root,
                             R.string.network_error_message,
                             Snackbar.LENGTH_LONG
-                        ).show()
+                        ).setAction(R.string.close_snack_bar) {
+                        }.show()
                     }
                 }
         }
