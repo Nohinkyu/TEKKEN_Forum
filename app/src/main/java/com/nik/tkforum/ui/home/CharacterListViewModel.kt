@@ -3,6 +3,7 @@ package com.nik.tkforum.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nik.tkforum.data.repository.CharacterListRepository
+import com.nik.tkforum.data.repository.UserRepository
 import com.nik.tkforum.data.source.local.CharacterListEntity
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.util.Constants
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
     private val repository: CharacterListRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _characterList = MutableStateFlow<List<CharacterListSection>>(emptyList())
@@ -28,6 +30,8 @@ class CharacterListViewModel @Inject constructor(
 
     private val _isCharacterSave: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isCharacterSave: StateFlow<Boolean> = _isCharacterSave
+
+    val isSeriesSwitchCheck = userRepository.checkSeriesData()
 
     fun loadSevenCharacterList() {
         viewModelScope.launch {
@@ -75,22 +79,37 @@ class CharacterListViewModel @Inject constructor(
 
     fun getCharacterList() {
         viewModelScope.launch {
-            for (season in Constants.SERIES_LIST) {
-                when (val response = repository.getSeasonCharacterList(season)) {
-                    is ApiResultSuccess -> {
-                        val entity = CharacterListEntity(
-                            season = response.data.season,
-                            characterList = response.data.characterList
-                        )
-                        repository.insertCharacterList(entity)
-                    }
+            if (repository.getCharacterList().isEmpty()) {
+                for (season in Constants.SERIES_LIST) {
+                    when (val response = repository.getSeasonCharacterList(season)) {
+                        is ApiResultSuccess -> {
+                            val entity = CharacterListEntity(
+                                season = response.data.season,
+                                characterList = response.data.characterList
+                            )
+                            repository.insertCharacterList(entity)
+                        }
 
-                    else -> {
-                        _isCharacterSave.value = false
+                        else -> {
+                            _isCharacterSave.value = false
+                        }
                     }
                 }
+                _isCharacterSave.value = true
             }
-            _isCharacterSave.value = true
+        }
+    }
+
+    fun reDownLoadCharacterList() {
+        viewModelScope.launch {
+            for (season in Constants.SEVEN_SEASON_LIST) {
+                repository.deleteCharacterList(season)
+            }
+            for (season in Constants.EIGHT_SEASON_LIST) {
+                repository.deleteCharacterList(season)
+            }
+            getCharacterList()
+            loadSevenCharacterList()
         }
     }
 }

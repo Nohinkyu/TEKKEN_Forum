@@ -4,17 +4,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.google.firebase.auth.FirebaseAuth
 import com.nik.tkforum.R
-import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.databinding.FragmentSettingBinding
 import com.nik.tkforum.ui.BaseFragment
+import com.nik.tkforum.ui.home.CharacterListViewModel
 import com.nik.tkforum.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment() {
@@ -23,12 +21,12 @@ class SettingFragment : BaseFragment() {
     override val layoutId: Int get() = R.layout.fragment_setting
     private val firebaseAuth = FirebaseAuth.getInstance()
 
-    @Inject
-    lateinit var preferencesManager: PreferenceManager
+    private val characterListViewModel: CharacterListViewModel by viewModels()
+
+    private val settingViewModel: SettingViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setLayout()
         binding.tvLogout.setOnClickListener {
             signOut()
@@ -38,26 +36,19 @@ class SettingFragment : BaseFragment() {
         }
 
         binding.tvGetFrameInfo.setOnClickListener {
-            getFrameInfo()
+            getNewFrameData()
         }
     }
 
     private fun signOut() {
         firebaseAuth.signOut()
-        with(preferencesManager) {
-            clear()
-        }
+        settingViewModel.deleteUserInfo()
         findNavController().navigate(SettingFragmentDirections.actionNavSettingToNavLogin())
     }
 
     private fun setLayout() {
-        with(preferencesManager) {
-            binding.tvMail.text = getString(Constants.KEY_MAIL_ADDRESS, "")
-            binding.tvNickname.text = getString(Constants.KEY_NICKNAME, "")
-            binding.ivProfileImage.load(getString(Constants.KEY_PROFILE_IMAGE, "")) {
-                transformations(CircleCropTransformation())
-            }
-        }
+        binding.userInfo = settingViewModel.userInfo
+        setSwitchListener()
     }
 
     private fun surveyClick() {
@@ -65,10 +56,19 @@ class SettingFragment : BaseFragment() {
         startActivity(intent)
     }
 
-    private fun getFrameInfo() {
-        val dbFile = requireContext().getDatabasePath(Constants.CHARACTER_DATA_BASE)
-        if (dbFile.exists()) {
-            dbFile.delete()
+    private fun getNewFrameData() {
+        characterListViewModel.reDownLoadCharacterList()
+    }
+
+    private fun setSwitchListener() {
+        binding.swCheckSeries.isChecked = settingViewModel.isSwitchCheck.isNotBlank()
+
+        binding.swCheckSeries.setOnCheckedChangeListener { compoundButton, onSwitch ->
+            if (onSwitch) {
+                settingViewModel.clickSwitch()
+            } else {
+                settingViewModel.unCheckSwitch()
+            }
         }
     }
 }
