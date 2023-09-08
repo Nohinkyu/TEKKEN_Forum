@@ -15,13 +15,29 @@ class UserRepository @Inject constructor(
         preferenceManager.getString(Constants.KEY_MAIL_ADDRESS, "")
     )
 
-    fun isChatRoom() = preferenceManager.getString(Constants.KET_CHAT_ROOM, "")
+    fun isChatRoom() = preferenceManager.getString(Constants.KEY_CHAT_ROOM, "")
+
+    fun checkSeriesData() = preferenceManager.getString(Constants.KEY_CHECK_SERIES_DATA, "")
+
+    fun clickSwitch() {
+        preferenceManager.putString(Constants.KEY_CHECK_SERIES_DATA, Constants.CLICK_SWITCH)
+    }
+
+    fun unCheck() {
+        preferenceManager.removeString(Constants.KEY_CHECK_SERIES_DATA)
+    }
 
     fun createChatRoom() {
-        preferenceManager.putString(Constants.KET_CHAT_ROOM, getUserInfo().nickname)
+        preferenceManager.putString(Constants.KEY_CHAT_ROOM, getUserInfo().nickname)
+    }
+
+    fun deleteUserInfo() {
+        preferenceManager.removeString(Constants.KEY_PROFILE_IMAGE)
+        preferenceManager.removeString(Constants.KEY_NICKNAME)
+        preferenceManager.removeString(Constants.KEY_MAIL_ADDRESS)
     }
 
     fun deleteChatRoom() {
-        preferenceManager.removeString(Constants.KET_CHAT_ROOM)
+        preferenceManager.removeString(Constants.KEY_CHAT_ROOM)
     }
 }

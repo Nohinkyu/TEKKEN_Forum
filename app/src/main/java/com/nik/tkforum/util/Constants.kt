@@ -7,7 +7,9 @@ object Constants {
     const val KEY_NICKNAME = "nickname"
     const val KEY_MAIL_ADDRESS = "mail_address"
     const val KEY_PROFILE_IMAGE = "profile_image"
-    const val KET_CHAT_ROOM = "chat_room"
+    const val KEY_CHAT_ROOM = "chat_room"
+    const val KEY_CHECK_SERIES_DATA = "check_series_data"
+    const val CLICK_SWITCH = "click_switch"
 
     const val CREATOR_KET = "creator_key"
 
