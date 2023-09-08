@@ -25,4 +25,8 @@ class CharacterListRepository @Inject constructor(
     suspend fun insertCharacterList(characterListEntity: CharacterListEntity) {
         return dao.insertCharacterList(characterListEntity)
     }
+
+    suspend fun deleteCharacterList(season: String) {
+        dao.delete(season)
+    }
 }
