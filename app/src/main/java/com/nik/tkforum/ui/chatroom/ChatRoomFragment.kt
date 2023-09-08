@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
@@ -108,10 +109,8 @@ class ChatRoomFragment : BaseFragment() {
     }
 
     private fun deleteChatRoom() {
-        val action = ChatRoomFragmentDirections.actionNavChatRoomToNavChat()
         binding.ibDeleteChatRoom.setOnClickListener {
-            viewModel.deleteChatRoom(args.chatRoomKey, args.chatRoomHostName)
-            findNavController().navigate(action)
+            showDeleteChatRoomDialog()
         }
     }
 
@@ -149,5 +148,23 @@ class ChatRoomFragment : BaseFragment() {
                     adapter.submitList(chatTypeList)
                 }
         }
+    }
+
+    private fun showDeleteChatRoomDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+        val action = ChatRoomFragmentDirections.actionNavChatRoomToNavChat()
+
+        builder.setTitle(R.string.dialog_title_delete_chat_room)
+        builder.setMessage(R.string.dialog_title_delete_chat_room)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            viewModel.deleteChatRoom(args.chatRoomKey, args.chatRoomHostName)
+            findNavController().navigate(action)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton(R.string.dialog_negative) { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }
