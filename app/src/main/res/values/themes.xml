@@ -34,4 +34,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/AppAlertDialogTitle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AppAlertButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AppAlertButtonStyle</item>
+    </style>
+
+    <style name="AppAlertDialogTitle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black_appbar</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="AppAlertButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black_appbar</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
