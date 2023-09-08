@@ -32,4 +32,6 @@
     <string name="empty_data">추후 데이터 추가 예정 입니다.</string>
     <string name="hint_et_chat_room">메시지 입력</string>
     <string name="is_chat_room_message">채팅방 은 한 계정당 한개만 생성 가능합니다.</string>
+    <string name="close_snack_bar">확인</string>
+    <string name="is_blank">검색어 를 입력해 주세요.</string>
 </resources>
