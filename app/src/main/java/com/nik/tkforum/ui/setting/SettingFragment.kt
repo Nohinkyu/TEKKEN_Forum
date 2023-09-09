@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentSettingBinding
@@ -29,14 +30,14 @@ class SettingFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
         binding.tvLogout.setOnClickListener {
-            signOut()
+            showLogoutDialog()
         }
         binding.tvSurvey.setOnClickListener {
             surveyClick()
         }
 
         binding.tvGetFrameInfo.setOnClickListener {
-            getNewFrameData()
+            getNewFrameDialog()
         }
     }
 
@@ -70,5 +71,61 @@ class SettingFragment : BaseFragment() {
                 settingViewModel.unCheckSwitch()
             }
         }
+    }
+
+    private fun getNewFrameDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+
+        builder.setTitle(R.string.dialog_get_new_frame_data_title)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            getNewFrameData()
+            dialog.dismiss()
+            successDialog()
+        }
+        builder.setNegativeButton(R.string.dialog_negative) { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showLogoutDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+
+        builder.setTitle(R.string.dialog_setting_logout_title)
+        builder.setMessage(R.string.dialog_setting_logout_message)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            signOut()
+            dialog.dismiss()
+        }
+        builder.setNegativeButton(R.string.dialog_negative) { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun successDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+        builder.setTitle(R.string.dialog_success_get_frame_data_title)
+        builder.setMessage(R.string.dialog_success_get_frame_data_message)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            dialog.dismiss()
+            restartApp()
+        }
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    private fun restartApp() {
+        val intent =
+            requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        if (intent != null) {
+            startActivity(intent)
+        }
+        requireActivity().finish()
     }
 }
