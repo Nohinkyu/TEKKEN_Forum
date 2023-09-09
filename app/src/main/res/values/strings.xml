@@ -13,6 +13,7 @@
     <string name="label_create_chat_room">채팅방 생성</string>
     <string name="label_manual">설명서</string>
     <string name="frame_list">Frame List</string>
+    <string name="frame_list_dialog">Frame List Manual</string>
     <string name="frame_header_move_name">기술명, 커맨드</string>
     <string name="frame_header_start">발생</string>
     <string name="frame_header_guard">가드</string>
@@ -40,4 +41,14 @@
     <string name="dialog_message_create_chat_room">채팅방은 계정당 한개만 만들수 있습니다</string>
     <string name="dialog_title_delete_chat_room">채팅방을 삭제하시겠습니까?</string>
     <string name="dialog_message_delete_chat_room">채팅방을 생성한 유저만 삭제할 수 있습니다.</string>
+    <string name="dialog_manual_title">용어 설명</string>
+    <string name="dialog_manual_number_commend">789\n4N6\n123</string>
+    <string name="dialog_manual_arrow_commend">↖↑↗\n←N→\n↙↓↘</string>
+    <string name="dialog_manual_commend">P: 펀치버튼, K: 킥버튼\nLP: 왼손, RP: 오른손 AP: 왼손+오른손\nLK: 왼발, RK: 오른발, AK: 왼발+ 오른발\n AL:왼손+왼발, AR: 오른손+ 오른발\nD: 다운, F: 프레임, G: 가드\n J: 저스트, H: 홀드, S: 스크류\ng: 가드가능, N중립, A: 공중에뜸\n상: 상단공격, 중: 중단공격\n 하: 하단공격, WB: 월바운드\n가불: 가드불능, 특: 특수</string>
+    <string name="hint_frame_data_search">Frame Data 검색</string>
+    <string name="dialog_setting_logout_title">로그아웃 하시겠습니까?</string>
+    <string name="dialog_setting_logout_message">생성한 채팅방, 대화 내역은 삭제되지 않습니다.</string>
+    <string name="dialog_get_new_frame_data_title">프레임 데이터를 다시 받습니다.</string>
+    <string name="dialog_success_get_frame_data_title">프레임 데이터를 다시 받았습니다</string>
+    <string name="dialog_success_get_frame_data_message">앱을 재실행 해주세요</string>
 </resources>
