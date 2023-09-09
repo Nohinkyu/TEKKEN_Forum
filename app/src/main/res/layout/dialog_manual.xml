@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_dialog">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/background_manual_dialog_top"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/dialog_manual_title"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_manual_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:letterSpacing="1"
+        android:lineSpacingExtra="8dp"
+        android:text="@string/dialog_manual_number_commend"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_manual_arrow"
+        app:layout_constraintEnd_toStartOf="@+id/tv_manual_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_manual_arrow" />
+
+    <TextView
+        android:id="@+id/tv_manual_arrow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:letterSpacing="1"
+        android:lineSpacingExtra="8dp"
+        android:text="@string/dialog_manual_arrow_commend"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_manual_number"
+        app:layout_constraintTop_toBottomOf="@id/tv_dialog_title" />
+
+    <TextView
+        android:id="@+id/tv_manual_commend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/dialog_manual_commend"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bt_dialog_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_manual_arrow" />
+
+    <TextView
+        android:id="@+id/bt_dialog_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_manual_dialog_bottom"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/dialog_positive"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
