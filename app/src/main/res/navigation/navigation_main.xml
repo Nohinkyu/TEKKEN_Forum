@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_frame_list"
             app:destination="@id/nav_frame_list" />
+        <action
+            android:id="@+id/action_nav_home_to_progress_dialog"
+            app:destination="@id/progress_dialog" />
     </fragment>
     <fragment
         android:id="@+id/nav_video"
@@ -56,6 +59,9 @@
             app:destination="@id/nav_sign_in"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_setting_to_progress_dialog"
+            app:destination="@id/progress_dialog" />
     </fragment>
 
     <fragment
@@ -94,5 +100,11 @@
         android:name="com.nik.tkforum.ui.dialog.ManualDialogFragment"
         android:label="@string/frame_list_dialog"
         tools:layout="@layout/dialog_manual" />
+
+    <dialog
+        android:id="@+id/progress_dialog"
+        android:name="com.nik.tkforum.ui.dialog.ProgressDialog"
+        android:label="@string/progress_dialog"
+        tools:layout="@layout/dialog_working_progress" />
 
 </navigation>

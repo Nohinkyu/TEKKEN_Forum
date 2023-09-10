@@ -34,6 +34,6 @@ class ManualDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        context?.setDialogSize(this, 0.9f, 0.62f)
+        context?.setDialogSize(this, 0.9f, 0.8f)
     }
 }
