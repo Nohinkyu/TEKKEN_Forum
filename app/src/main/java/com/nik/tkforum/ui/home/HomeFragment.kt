@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.data.model.CharacterData
@@ -30,7 +31,9 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setCharacterList()
-        getFrameData()
+        isSavedFrameData()
+        isSuccessSave()
+        setErrorMessage()
 
         binding.ibEight.setOnClickListener {
             setEightCharacterList()
@@ -57,26 +60,22 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
     private fun setSevenCharacterList() {
         binding.rvCharacterList.adapter = adapter
         lifecycleScope.launch {
-            if (!viewModel.isSevenLoad.value) {
-                viewModel.loadSevenCharacterList()
-                viewModel.characterList.flowWithLifecycle(
-                    viewLifecycleOwner.lifecycle,
-                    Lifecycle.State.STARTED
-                ).collect { characterList -> adapter.submitList(characterList) }
-            }
+            viewModel.loadSevenCharacterList()
+            viewModel.characterList.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { characterList -> adapter.submitList(characterList) }
         }
     }
 
     private fun setEightCharacterList() {
         binding.rvCharacterList.adapter = adapter
         lifecycleScope.launch {
-            if (!viewModel.isEightLoad.value) {
-                viewModel.loadEightCharacterList()
-                viewModel.characterList.flowWithLifecycle(
-                    viewLifecycleOwner.lifecycle,
-                    Lifecycle.State.STARTED
-                ).collect { characterList -> adapter.submitList(characterList) }
-            }
+            viewModel.loadEightCharacterList()
+            viewModel.characterList.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { characterList -> adapter.submitList(characterList) }
         }
     }
 
@@ -102,7 +101,94 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
         }
     }
 
-    private fun getFrameData() {
-        viewModel.getCharacterList()
+    private fun isSavedFrameData() {
+        viewModel.isSavedFrameData()
+        lifecycleScope.launch {
+            viewModel.isSavedFrameData.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { isEmpty ->
+                if (!isEmpty) {
+                    getFrameDataDialog()
+                }
+            }
+        }
+    }
+
+    private fun isSuccessSave() {
+        lifecycleScope.launch {
+            viewModel.isCharacterSave.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { isSuccess ->
+                if (isSuccess) {
+                    getFrameDataSuccessDialog()
+                }
+            }
+        }
+    }
+
+    private fun getFrameDataDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+
+        builder.setTitle(R.string.dialog_ge_frame_data_title)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            dialog.dismiss()
+            setProgressDialog()
+            viewModel.getCharacterList()
+        }
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    private fun getFrameDataSuccessDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+
+        builder.setTitle(R.string.dialog_success_get_frame_data_title)
+        builder.setPositiveButton(R.string.dialog_positive) { dialog, _ ->
+            dialog.dismiss()
+            setSevenCharacterList()
+        }
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    private fun setProgressDialog() {
+        val action = HomeFragmentDirections.actionNavHomeToProgressDialog()
+        lifecycleScope.launch {
+            viewModel.isLoading.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { isLoading ->
+                if (isLoading == true) {
+                    findNavController().navigate(action)
+                } else {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+    }
+
+    private fun setErrorMessage() {
+        lifecycleScope.launch {
+            viewModel.isError.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            )
+                .collect { isError ->
+                    if (isError) {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.network_error_message,
+                            Snackbar.LENGTH_LONG
+                        ).setAction(R.string.close_snack_bar) {
+                        }.show()
+                    }
+                }
+        }
     }
 }
