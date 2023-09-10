@@ -49,6 +49,8 @@
     <string name="dialog_setting_logout_title">로그아웃 하시겠습니까?</string>
     <string name="dialog_setting_logout_message">생성한 채팅방, 대화 내역은 삭제되지 않습니다.</string>
     <string name="dialog_get_new_frame_data_title">프레임 데이터를 다시 받습니다.</string>
-    <string name="dialog_success_get_frame_data_title">프레임 데이터를 다시 받았습니다</string>
+    <string name="dialog_success_get_frame_data_title">프레임 데이터를 성공적으로 다운로드 했습니다.</string>
     <string name="dialog_success_get_frame_data_message">앱을 재실행 해주세요</string>
+    <string name="dialog_ge_frame_data_title">프레임 데이터를 다운로드합니다.</string>
+    <string name="progress_dialog_title">데이터를 받아오는 중입니다\n 잠시 기다려주세요.</string>
 </resources>
