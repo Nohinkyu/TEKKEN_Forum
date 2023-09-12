@@ -49,6 +49,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:padding="10dp"
+            android:textColorHint="@color/black"
             android:textCursorDrawable="@drawable/ic_cursor"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/sv_frame_list"
