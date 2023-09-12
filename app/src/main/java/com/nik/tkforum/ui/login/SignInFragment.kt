@@ -20,6 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.R
 import com.nik.tkforum.data.source.local.PreferenceManager
+import com.nik.tkforum.data.source.remote.network.FirebaseData
 import com.nik.tkforum.databinding.FragmentLoginBinding
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
@@ -146,5 +147,7 @@ class SignInFragment : BaseFragment() {
             putString(Constants.KEY_MAIL_ADDRESS, firebase?.email.toString())
             putString(Constants.KEY_PROFILE_IMAGE, firebase?.photoUrl.toString())
         }
+        FirebaseData.setUserInfo()
+        FirebaseData.getUserToken()
     }
 }

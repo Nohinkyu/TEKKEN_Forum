@@ -7,6 +7,7 @@ import com.nik.tkforum.data.model.ChatRoomInfo
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomListRepository
 import com.nik.tkforum.data.repository.UserRepository
+import com.nik.tkforum.data.source.remote.network.FirebaseData
 import com.nik.tkforum.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +34,8 @@ class ChatRoomListViewModel @Inject constructor(
     private val _isError: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isError: StateFlow<Boolean> = _isError
 
+    val auth = FirebaseData.token.toString()
+
     val userInfo = userRepository.getUserInfo()
 
     var isChatRoom = userRepository.isChatRoom()
@@ -40,7 +43,7 @@ class ChatRoomListViewModel @Inject constructor(
     fun loadAllChatRoom() {
         _isError.value = false
         viewModelScope.launch {
-            val response = repository.getChatRoomList()
+            val response = repository.getChatRoomList(auth)
             val chatRoomList = mutableListOf<ChatRoomInfo>()
             when (response) {
                 is ApiResultSuccess -> {
@@ -49,6 +52,7 @@ class ChatRoomListViewModel @Inject constructor(
                         chatRoomList.add(ChatRoomInfo(chatRoom.key, chatRoom.value))
                     }
                 }
+
                 else -> {
                     _isError.value = true
                 }
@@ -69,7 +73,7 @@ class ChatRoomListViewModel @Inject constructor(
                 mapOf(Constants.CREATOR_KET to userInfo)
             )
         viewModelScope.launch {
-            when (repository.createChatRoom(chatRoom)) {
+            when (repository.createChatRoom(chatRoom, auth)) {
                 is ApiResultSuccess -> {
                     userRepository.createChatRoom()
                     isChatRoom = userRepository.isChatRoom()
@@ -85,12 +89,13 @@ class ChatRoomListViewModel @Inject constructor(
 
     fun getCreateChatRoomKey() {
         viewModelScope.launch {
-            when (val response = repository.getChatRoomList()) {
+            when (val response = repository.getChatRoomList(auth)) {
                 is ApiResultSuccess -> {
                     _isError.value = false
                     _lastChatRoomKey.value = response.data.keys.last()
                     _isGetChatRoomKey.value = true
                 }
+
                 else -> {
                     _isError.value = true
                     _isGetChatRoomKey.value = false
@@ -101,21 +106,23 @@ class ChatRoomListViewModel @Inject constructor(
 
     fun joinUser(chatRoomKey: String) {
         viewModelScope.launch {
-            when (val response = repository.getChatRoomList()) {
+            when (val response = repository.getChatRoomList(auth)) {
                 is ApiResultSuccess -> {
                     if (!response.data.getValue(chatRoomKey).userList.values.contains(userInfo)) {
-                        val result = repository.joinUser(chatRoomKey, userInfo)
+                        val result = repository.joinUser(chatRoomKey, userInfo, auth)
                         _isError.value = false
                         when (result) {
                             is ApiResultSuccess -> {
                                 _isError.value = false
                             }
+
                             else -> {
                                 _isError.value = true
                             }
                         }
                     }
                 }
+
                 else -> {
                     _isError.value = true
                 }
