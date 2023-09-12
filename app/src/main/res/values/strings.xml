@@ -54,4 +54,7 @@
     <string name="dialog_success_get_frame_data_message">앱을 재실행 해주세요</string>
     <string name="dialog_ge_frame_data_title">프레임 데이터를 다운로드합니다.</string>
     <string name="progress_dialog_title">데이터를 받아오는 중입니다\n 잠시 기다려주세요.</string>
+    <string name="notification_permission">데이터 업데이트 알림 받기</string>
+    <string name="notification_permission_message">프레임 데이터 업데이트 소식을 알림으로 받습니다.</string>
+    <string name="notification_permission_denied_message">프레임 데이터 업데이트 관련 중요한 알림을 받아보시려면 알림 권한을 허용해 주세요.</string>
 </resources>
