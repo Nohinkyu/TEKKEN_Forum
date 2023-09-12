@@ -1,9 +1,12 @@
 package com.nik.tkforum.ui.setting
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -45,6 +48,9 @@ class SettingFragment : BaseFragment() {
 
         binding.tvGetFrameInfo.setOnClickListener {
             getNewFrameDialog()
+        }
+        binding.tvNotificationPermission.setOnClickListener {
+            requestNotificationPermission()
         }
     }
 
@@ -181,6 +187,36 @@ class SettingFragment : BaseFragment() {
                         }.show()
                     }
                 }
+        }
+    }
+
+    private val requestPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        when (it) {
+            true -> {
+                Snackbar.make(
+                    binding.root,
+                    R.string.notification_permission_message,
+                    Snackbar.LENGTH_LONG
+                ).setAction(R.string.close_snack_bar) {
+                }.show()
+            }
+
+            false -> {
+                Snackbar.make(
+                    binding.root,
+                    R.string.notification_permission_denied_message,
+                    Snackbar.LENGTH_LONG
+                ).setAction(R.string.close_snack_bar) {
+                }.show()
+            }
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 }
