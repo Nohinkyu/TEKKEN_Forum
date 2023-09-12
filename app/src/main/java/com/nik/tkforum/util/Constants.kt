@@ -35,4 +35,7 @@ object Constants {
     )
 
     const val CHARACTER_DATA_BASE = "frame_data_data_base"
+
+    const val FCM_CHANNEL_ID = "update_data_Notification_channel"
+    const val FCM_CHANNEL_NAME = "Update data Notification Channel"
 }
