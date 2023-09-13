@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/tv_character_name"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@{characterInfo.characterName}"
             android:textColor="@color/white"
@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="@id/iv_character_image"
             app:layout_constraintStart_toStartOf="@id/iv_character_image"
             app:layout_constraintTop_toTopOf="@id/iv_character_image"
-            tools:text="BRAYN" />
+            tools:text="PANDA AND KUMA" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
