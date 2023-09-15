@@ -31,4 +31,5 @@
     <string name="send_error_message">메시지 전송에 실패했습니다</string>
     <string name="empty_data">추후 데이터 추가 예정 입니다.</string>
     <string name="hint_et_chat_room">메시지 입력</string>
+    <string name="is_chat_room_message">채팅방 은 한 계정당 한개만 생성 가능합니다.</string>
 </resources>

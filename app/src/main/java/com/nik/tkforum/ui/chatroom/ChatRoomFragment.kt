@@ -8,17 +8,13 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
-import com.nik.tkforum.data.model.Chat
-import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
-import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatRoomFragment : BaseFragment() {
@@ -30,27 +26,13 @@ class ChatRoomFragment : BaseFragment() {
 
     private val viewModel: ChatRoomViewModel by viewModels()
 
-    private lateinit var preferencesManager: PreferenceManager
-
-    private lateinit var user: User
-
+    private val adapter = ChatListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
-        deleteChatRoom()
-        setErrorMessage()
-        sendErrorMessage()
 
-        preferencesManager = PreferenceManager(requireContext())
-
-        user = User(
-            preferencesManager.getString(Constants.KEY_PROFILE_IMAGE, ""),
-            preferencesManager.getString(Constants.KEY_NICKNAME, ""),
-            preferencesManager.getString(Constants.KEY_MAIL_ADDRESS, "")
-        )
         binding.chatRoomTitle = args.chatRoomHostName
-        viewModel.addChatListener(args.chatRoomKey)
 
         val editText = binding.etChat
         binding.btSend.setOnClickListener {
@@ -62,23 +44,33 @@ class ChatRoomFragment : BaseFragment() {
     }
 
     private fun setLayout() {
-        val adapter = ChatListAdapter()
         binding.rvChatList.adapter = adapter
-        viewModel.loadChatList(args.chatRoomKey)
-        viewModel.chatList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            binding.rvChatList.scrollToPosition(adapter.currentList.size - 1)
+        binding.rvChatList.apply {
+            addOnLayoutChangeListener(onLayoutChangeListener)
         }
+        deleteChatRoom()
+        setErrorMessage()
+        sendErrorMessage()
+        setDeleteFailMessage()
+        viewModel.loadChatList(args.chatRoomKey)
+        viewModel.addChatListener(args.chatRoomKey)
+        setChatList()
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.rvChatList.layoutManager?.scrollToPosition(adapter.currentList.size - 1)
+            }
+        })
     }
 
+    private val onLayoutChangeListener =
+        View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                binding.rvChatList.scrollBy(0, oldBottom - bottom)
+            }
+        }
+
     private fun sendChat() {
-        val chat = Chat(
-            user.profileUri,
-            user.nickname,
-            binding.etChat.text.toString(),
-            user.email
-        )
-        viewModel.sendChat(args.chatRoomKey, chat)
+        viewModel.sendChat(args.chatRoomKey, binding.etChat.text.toString())
     }
 
     private fun sendErrorMessage() {
@@ -97,12 +89,12 @@ class ChatRoomFragment : BaseFragment() {
 
     private fun setErrorMessage() {
         lifecycleScope.launch {
-            viewModel.loadingError.flowWithLifecycle(
+            viewModel.isLoading.flowWithLifecycle(
                 viewLifecycleOwner.lifecycle,
                 Lifecycle.State.STARTED
             )
                 .collect { isError ->
-                    if (isError) {
+                    if (isError == false) {
                         Snackbar.make(
                             binding.root,
                             R.string.network_error_message,
@@ -116,12 +108,43 @@ class ChatRoomFragment : BaseFragment() {
     private fun deleteChatRoom() {
         val action = ChatRoomFragmentDirections.actionNavChatRoomToNavChat()
         binding.ibDeleteChatRoom.setOnClickListener {
-            if (args.chatRoomHostName == user.nickname) {
-                viewModel.deleteChatRoom(args.chatRoomKey)
-                findNavController().navigate(action)
-            } else {
-                Snackbar.make(binding.root, R.string.not_host, Snackbar.LENGTH_LONG).show()
+            viewModel.deleteChatRoom(args.chatRoomKey, args.chatRoomHostName)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun setDeleteFailMessage() {
+        lifecycleScope.launch {
+            viewModel.isChatRoomHost.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { isChatRoomHost ->
+                if (isChatRoomHost) {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.not_host,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
+        }
+    }
+
+    private fun setChatList() {
+        lifecycleScope.launch {
+            viewModel.chatList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { ChatList ->
+                    val chatTypeList = mutableListOf<ChatType>()
+                    for (chat in ChatList) {
+                        if (chat.senderEmail == viewModel.userInfo.email) {
+                            chatTypeList.add(ChatType.SentChat(chat))
+                        } else {
+                            chatTypeList.add(ChatType.ReceivedChat(chat))
+                        }
+                    }
+                    adapter.submitList(chatTypeList)
+                }
         }
     }
 }
