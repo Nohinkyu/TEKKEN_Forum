@@ -1,4 +1,4 @@
-package com.nik.tkforum.binding
+package com.nik.tkforum.ui.binding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

@@ -1,9 +1,9 @@
-package com.nik.tkforum.repository
+package com.nik.tkforum.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.nik.tkforum.data.converter.VideoListDataSource
-import com.nik.tkforum.network.ApiClient
+import com.nik.tkforum.data.source.remote.network.ApiClient
 
 class VideoRepository(private val apiClient: ApiClient) {
 

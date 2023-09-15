@@ -1,4 +1,4 @@
-package com.nik.tkforum.network
+package com.nik.tkforum.data.source.remote.network
 
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.util.Constants

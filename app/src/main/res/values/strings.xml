@@ -27,4 +27,6 @@
     <string name="survey">고객 의견</string>
     <string name="empty_chat">채팅 내역이 존재하지 않습니다.</string>
     <string name="not_host">채팅방 을 생성한 유저만 삭제가 가능 합니다.</string>
+    <string name="network_error_message">네트워크 연결 상태를 확인 해주세요</string>
+    <string name="send_error_message">메시지 전송에 실패했습니다</string>
 </resources>

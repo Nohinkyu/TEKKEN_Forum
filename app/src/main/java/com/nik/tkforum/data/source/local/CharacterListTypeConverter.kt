@@ -1,7 +1,7 @@
-package com.nik.tkforum.data.local
+package com.nik.tkforum.data.source.local
 
 import androidx.room.TypeConverter
-import com.nik.tkforum.data.CharacterData
+import com.nik.tkforum.data.model.CharacterData
 import com.squareup.moshi.JsonAdapter
 
 import com.squareup.moshi.Moshi

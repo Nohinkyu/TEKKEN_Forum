@@ -11,11 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentVideoBinding
-import com.nik.tkforum.repository.VideoRepository
+import com.nik.tkforum.data.repository.VideoRepository
 import com.nik.tkforum.util.Constants
 import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.ui.BaseFragment
-import com.nik.tkforum.util.VideoClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

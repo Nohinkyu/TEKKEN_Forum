@@ -12,9 +12,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.data.Chat
-import com.nik.tkforum.repository.ChatRoomRepository
+import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
+import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.util.Constants
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel() {
@@ -30,18 +33,32 @@ class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel(
     private val _chatList = MutableLiveData<List<ChatType>>()
     val chatList: LiveData<List<ChatType>> = _chatList
 
+    private val _loadingError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val loadingError: StateFlow<Boolean> = _loadingError
+
+    private val _sendError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val sendError: StateFlow<Boolean> = _sendError
+
+    private val _deleteError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val deleteError: StateFlow<Boolean> = _deleteError
+
     fun loadChatList(chatRoomKey: String) {
         viewModelScope.launch {
             val response = repository.getChatList(chatRoomKey)
             val chatTypeList = mutableListOf<ChatType>()
-            val data = response.body()
-            data?.let {
-                for (chat in data.values) {
-                    if (chat.senderEmail == senderEmail) {
-                        chatTypeList.add(ChatType.SentChat(chat))
-                    } else {
-                        chatTypeList.add(ChatType.ReceivedChat(chat))
+            when (response) {
+                is ApiResultSuccess -> {
+                    for (chat in response.data.values) {
+                        if (chat.senderEmail == senderEmail) {
+                            chatTypeList.add(ChatType.SentChat(chat))
+                        } else {
+                            chatTypeList.add(ChatType.ReceivedChat(chat))
+                        }
                     }
+                }
+
+                else -> {
+                    _loadingError.value = true
                 }
             }
             _chatList.value = chatTypeList
@@ -50,7 +67,15 @@ class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel(
 
     fun sendChat(chatRoomKey: String, chat: Chat) {
         viewModelScope.launch {
-            repository.sendChat(chatRoomKey, chat)
+            when (repository.sendChat(chatRoomKey, chat)) {
+                is ApiResultSuccess -> {
+                    _sendError.value = false
+                }
+
+                else -> {
+                    _sendError.value = true
+                }
+            }
         }
     }
 
@@ -80,9 +105,17 @@ class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel(
             })
     }
 
-    fun deleteChatRoom(chatRoomKey: String){
+    fun deleteChatRoom(chatRoomKey: String) {
         viewModelScope.launch {
-            repository.deleteChatRoom(chatRoomKey)
+            when (repository.deleteChatRoom(chatRoomKey)) {
+                is ApiResultSuccess -> {
+                    _deleteError.value = false
+                }
+
+                else -> {
+                    _deleteError.value = true
+                }
+            }
         }
     }
 

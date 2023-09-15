@@ -1,4 +1,4 @@
-package com.nik.tkforum.data.local
+package com.nik.tkforum.data.source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

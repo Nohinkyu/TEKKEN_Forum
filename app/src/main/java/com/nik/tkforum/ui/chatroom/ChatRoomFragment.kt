@@ -3,17 +3,21 @@ package com.nik.tkforum.ui.chatroom
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
-import com.nik.tkforum.data.Chat
-import com.nik.tkforum.data.User
+import com.nik.tkforum.data.model.Chat
+import com.nik.tkforum.data.model.User
 import com.nik.tkforum.databinding.FragmentChatRoomBinding
-import com.nik.tkforum.repository.ChatRoomRepository
+import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
+import kotlinx.coroutines.launch
 
 class ChatRoomFragment : BaseFragment() {
 
@@ -40,6 +44,8 @@ class ChatRoomFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setLayout()
         deleteChatRoom()
+        setErrorMessage()
+        sendErrorMessage()
         binding.chatRoomTitle = args.chatRoomHostName
         viewModel.addChatListener(args.chatRoomKey)
 
@@ -70,6 +76,38 @@ class ChatRoomFragment : BaseFragment() {
             user.email
         )
         viewModel.sendChat(args.chatRoomKey, chat)
+    }
+
+    private fun sendErrorMessage() {
+        lifecycleScope.launch {
+            viewModel.sendError.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect { sendError ->
+                if (sendError) {
+                    Snackbar.make(binding.root, R.string.send_error_message, Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun setErrorMessage() {
+        lifecycleScope.launch {
+            viewModel.loadingError.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            )
+                .collect { isError ->
+                    if (isError) {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.network_error_message,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                }
+        }
     }
 
     private fun deleteChatRoom() {

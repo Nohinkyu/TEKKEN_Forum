@@ -3,8 +3,8 @@ package com.nik.tkforum.data.converter
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.nik.tkforum.BuildConfig
-import com.nik.tkforum.data.Video
-import com.nik.tkforum.network.ApiClient
+import com.nik.tkforum.data.model.Video
+import com.nik.tkforum.data.source.remote.network.ApiClient
 import retrofit2.HttpException
 import java.io.IOException
 

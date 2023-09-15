@@ -1,6 +1,6 @@
 package com.nik.tkforum.ui.chatroom
 
-import com.nik.tkforum.data.Chat
+import com.nik.tkforum.data.model.Chat
 
 sealed class ChatType {
 

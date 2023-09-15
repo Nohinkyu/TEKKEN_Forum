@@ -1,33 +1,47 @@
 package com.nik.tkforum.ui.chat
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.nik.tkforum.data.ChatRoom
-import com.nik.tkforum.data.ChatRoomInfo
-import com.nik.tkforum.data.User
-import com.nik.tkforum.repository.ChatRoomListRepository
+import com.nik.tkforum.data.model.ChatRoom
+import com.nik.tkforum.data.model.ChatRoomInfo
+import com.nik.tkforum.data.model.User
+import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
+import com.nik.tkforum.data.repository.ChatRoomListRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ChatRoomListViewModel(private val repository: ChatRoomListRepository) : ViewModel() {
 
-    private val _chatRoomList = MutableLiveData<List<ChatRoomInfo>>()
-    val chatRoomList: LiveData<List<ChatRoomInfo>> = _chatRoomList
+    private val _chatRoomList = MutableStateFlow<List<ChatRoomInfo>>(emptyList())
+    val chatRoomList: StateFlow<List<ChatRoomInfo>> = _chatRoomList
 
-    private val _lastChatRoomKey = MutableLiveData<String>()
-    val lastChatRoomKey: LiveData<String> = _lastChatRoomKey
+    private val _lastChatRoomKey = MutableStateFlow<String>("")
+    val lastChatRoomKey: StateFlow<String> = _lastChatRoomKey
+
+    private val _isGetChatRoomKey: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isGetChatRoomKey: StateFlow<Boolean> = _isGetChatRoomKey
+
+    private val _isError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isError: StateFlow<Boolean> = _isError
 
     fun loadAllChatRoom() {
+        _isError.value = false
         viewModelScope.launch {
             val response = repository.getChatRoomList()
             val chatRoomList = mutableListOf<ChatRoomInfo>()
-            val data = response.body()
-            data?.let {
-                for (chatRoom in data) {
-                    chatRoomList.add(ChatRoomInfo(chatRoom.key, chatRoom.value))
+            when (response) {
+                is ApiResultSuccess -> {
+                    _isError.value = false
+                    for (chatRoom in response.data) {
+                        chatRoomList.add(ChatRoomInfo(chatRoom.key, chatRoom.value))
+                    }
+                }
+
+                else -> {
+                    _isError.value = true
                 }
             }
             _chatRoomList.value = chatRoomList
@@ -36,23 +50,56 @@ class ChatRoomListViewModel(private val repository: ChatRoomListRepository) : Vi
 
     fun createChatRoom(chatRoom: ChatRoom) {
         viewModelScope.launch {
-            repository.createChatRoom(chatRoom)
+            when (repository.createChatRoom(chatRoom)) {
+                is ApiResultSuccess -> {
+                    _isError.value = false
+                }
+
+                else -> {
+                    _isError.value = true
+                }
+            }
         }
     }
 
     fun getCreateChatRoomKey() {
         viewModelScope.launch {
-            _lastChatRoomKey.value = repository.getCreateChatRoomKey()
+            when (val response = repository.getChatRoomList()) {
+                is ApiResultSuccess -> {
+                    _isError.value = false
+                    _lastChatRoomKey.value = response.data.keys.last()
+                    _isGetChatRoomKey.value = true
+                }
+
+                else -> {
+                    _isError.value = true
+                    _isGetChatRoomKey.value = false
+                }
+            }
         }
     }
 
     fun joinUser(chatRoomKey: String, user: User) {
         viewModelScope.launch {
-            val response = repository.getChatRoomList()
-            val data = response.body()
-            data?.let {
-                if (!data.getValue(chatRoomKey).userList.values.contains(user)) {
-                    repository.joinUser(chatRoomKey, user)
+            when (val response = repository.getChatRoomList()) {
+                is ApiResultSuccess -> {
+                    if (!response.data.getValue(chatRoomKey).userList.values.contains(user)) {
+                        val result = repository.joinUser(chatRoomKey, user)
+                        _isError.value = false
+                        when (result) {
+                            is ApiResultSuccess -> {
+                                _isError.value = false
+                            }
+
+                            else -> {
+                                _isError.value = true
+                            }
+                        }
+                    }
+                }
+
+                else -> {
+                    _isError.value = true
                 }
             }
         }

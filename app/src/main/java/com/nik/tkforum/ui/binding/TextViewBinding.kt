@@ -1,9 +1,9 @@
-package com.nik.tkforum.binding
+package com.nik.tkforum.ui.binding
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.nik.tkforum.R
-import com.nik.tkforum.data.ChatRoomInfo
+import com.nik.tkforum.data.model.ChatRoomInfo
 import com.nik.tkforum.util.DateFormat
 
 @BindingAdapter("dateFormat")
