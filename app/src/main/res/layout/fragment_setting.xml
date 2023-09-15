@@ -166,6 +166,27 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:id="@+id/tv_notification_permission"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:paddingStart="16dp"
+            android:text="@string/notification_permission"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_get_frame_info" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@id/tv_notification_permission"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
             android:id="@+id/tv_survey"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -176,7 +197,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_get_frame_info" />
+            app:layout_constraintTop_toBottomOf="@id/tv_notification_permission" />
 
         <View
             android:layout_width="0dp"
