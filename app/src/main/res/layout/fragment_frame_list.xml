@@ -45,7 +45,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/background_et_frame_list"
             android:drawableEnd="@drawable/ic_search"
-            android:hint="Frame Data 검색"
+            android:hint="@string/hint_frame_data_search"
             android:inputType="text"
             android:maxLines="1"
             android:padding="10dp"

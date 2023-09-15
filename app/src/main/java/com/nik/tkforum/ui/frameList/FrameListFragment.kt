@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nik.tkforum.R
 import com.nik.tkforum.data.model.FrameData
@@ -23,8 +24,22 @@ class FrameListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val action = FrameListFragmentDirections.actionNavFrameListToNavManualDialog()
         setLayout()
         binding.tbFrameList.title = args.characterData.characterName
+
+        binding.tbFrameList.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.set_manual -> {
+                    findNavController().navigate(action)
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun setLayout() {

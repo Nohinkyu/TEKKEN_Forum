@@ -22,14 +22,20 @@ class CharacterListViewModel @Inject constructor(
     private val _characterList = MutableStateFlow<List<CharacterListSection>>(emptyList())
     val characterList: StateFlow<List<CharacterListSection>> = _characterList
 
-    private val _isSevenLoad: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isSevenLoad: StateFlow<Boolean> = _isSevenLoad
-
-    private val _isEightLoad: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isEightLoad: StateFlow<Boolean> = _isEightLoad
-
     private val _isCharacterSave: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isCharacterSave: StateFlow<Boolean> = _isCharacterSave
+
+    private val _isSavedFrameData: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isSavedFrameData: StateFlow<Boolean> = _isSavedFrameData
+
+    private val _isLoading: MutableStateFlow<Boolean?> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean?> = _isLoading
+
+    private val _isReDownload: MutableStateFlow<Boolean?> = MutableStateFlow(false)
+    val isReDownload: StateFlow<Boolean?> = _isReDownload
+
+    private val _isError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isError: StateFlow<Boolean> = _isError
 
     val isSeriesSwitchCheck = userRepository.checkSeriesData()
 
@@ -50,8 +56,6 @@ class CharacterListViewModel @Inject constructor(
                 }
             }
             _characterList.value = sectionList
-            _isSevenLoad.value = true
-            _isEightLoad.value = false
         }
     }
 
@@ -72,14 +76,20 @@ class CharacterListViewModel @Inject constructor(
                 }
             }
             _characterList.value = sectionList
-            _isEightLoad.value = true
-            _isSevenLoad.value = false
+        }
+    }
+
+    fun isSavedFrameData() {
+        viewModelScope.launch {
+            val data = repository.getCharacterList()
+            _isSavedFrameData.value = data.isNotEmpty()
         }
     }
 
     fun getCharacterList() {
         viewModelScope.launch {
             if (repository.getCharacterList().isEmpty()) {
+                _isLoading.value = true
                 for (season in Constants.SERIES_LIST) {
                     when (val response = repository.getSeasonCharacterList(season)) {
                         is ApiResultSuccess -> {
@@ -92,16 +102,23 @@ class CharacterListViewModel @Inject constructor(
 
                         else -> {
                             _isCharacterSave.value = false
+                            _isError.value = true
                         }
                     }
                 }
                 _isCharacterSave.value = true
+                _isSavedFrameData.value = true
+                _isError.value = false
             }
+            _isLoading.value = false
+            _isCharacterSave.value = false
+            _isReDownload.value = false
         }
     }
 
     fun reDownLoadCharacterList() {
         viewModelScope.launch {
+            _isReDownload.value = true
             for (season in Constants.SEVEN_SEASON_LIST) {
                 repository.deleteCharacterList(season)
             }

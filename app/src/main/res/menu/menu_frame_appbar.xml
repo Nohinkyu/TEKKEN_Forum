@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_add_chat_room"
+        android:id="@+id/set_manual"
         android:icon="@drawable/ic_question_mark"
         android:title="@string/label_manual"
         app:showAsAction="always" />

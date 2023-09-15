@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_frame_list"
             app:destination="@id/nav_frame_list" />
+        <action
+            android:id="@+id/action_nav_home_to_progress_dialog"
+            app:destination="@id/progress_dialog" />
     </fragment>
     <fragment
         android:id="@+id/nav_video"
@@ -56,6 +59,9 @@
             app:destination="@id/nav_sign_in"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_setting_to_progress_dialog"
+            app:destination="@id/progress_dialog" />
     </fragment>
 
     <fragment
@@ -68,22 +74,37 @@
             app:argType="string" />
         <argument
             android:name="chatRoomHostName"
-            app:argType="string"/>
+            app:argType="string" />
         <action
             android:id="@+id/action_nav_chat_room_to_nav_chat"
             app:destination="@id/nav_chat"
             app:popUpTo="@id/nav_chat"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_frame_list"
         android:name="com.nik.tkforum.ui.frameList.FrameListFragment"
         android:label="@string/frame_list"
-        tools:layout="@layout/fragment_frame_list" >
+        tools:layout="@layout/fragment_frame_list">
         <argument
             android:name="character_data"
-            app:argType="com.nik.tkforum.data.model.CharacterData"/>
+            app:argType="com.nik.tkforum.data.model.CharacterData" />
+        <action
+            android:id="@+id/action_nav_frame_list_to_nav_manual_dialog"
+            app:destination="@id/nav_manual_dialog" />
     </fragment>
+
+    <dialog
+        android:id="@+id/nav_manual_dialog"
+        android:name="com.nik.tkforum.ui.dialog.ManualDialogFragment"
+        android:label="@string/frame_list_dialog"
+        tools:layout="@layout/dialog_manual" />
+
+    <dialog
+        android:id="@+id/progress_dialog"
+        android:name="com.nik.tkforum.ui.dialog.ProgressDialog"
+        android:label="@string/progress_dialog"
+        tools:layout="@layout/dialog_working_progress" />
 
 </navigation>
