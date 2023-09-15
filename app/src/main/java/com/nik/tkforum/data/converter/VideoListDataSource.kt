@@ -4,12 +4,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.data.model.Video
-import com.nik.tkforum.data.source.remote.network.ApiClient
+import com.nik.tkforum.data.source.remote.network.KakaoApiClient
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class VideoListDataSource(
-    private val apiClient: ApiClient,
+class VideoListDataSource @Inject constructor(
+    private val apiClient: KakaoApiClient,
     private val query: String
 ) : PagingSource<Int, Video>() {
 

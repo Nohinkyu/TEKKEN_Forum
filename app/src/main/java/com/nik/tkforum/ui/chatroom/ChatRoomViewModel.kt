@@ -4,25 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.nik.tkforum.BuildConfig
-import com.nik.tkforum.TekkenForumApplication
 import com.nik.tkforum.data.model.Chat
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomRepository
+import com.nik.tkforum.data.source.local.PreferenceManager
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel() {
+@HiltViewModel
+class ChatRoomViewModel @Inject constructor(
+    private val repository: ChatRoomRepository,
+    private val preferenceManager: PreferenceManager
+) :
+    ViewModel() {
 
-    private val senderEmail = TekkenForumApplication.preferencesManager.getString(
+    private val senderEmail = preferenceManager.getString(
         Constants.KEY_MAIL_ADDRESS, ""
     )
 
@@ -122,14 +127,5 @@ class ChatRoomViewModel(private val repository: ChatRoomRepository) : ViewModel(
     override fun onCleared() {
         super.onCleared()
         chatListener = null
-    }
-
-    companion object {
-
-        fun provideFactory(repository: ChatRoomRepository) = viewModelFactory {
-            initializer {
-                ChatRoomViewModel(repository)
-            }
-        }
     }
 }

@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentFrameListBinding
 import com.nik.tkforum.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FrameListFragment : BaseFragment() {
 
     override val binding get() = _binding as FragmentFrameListBinding

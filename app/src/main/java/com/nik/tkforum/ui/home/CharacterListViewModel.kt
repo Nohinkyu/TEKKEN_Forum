@@ -2,15 +2,18 @@ package com.nik.tkforum.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.nik.tkforum.data.repository.CharacterListRepository
 import com.nik.tkforum.util.Constants
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharacterListViewModel(private val repository: CharacterListRepository) : ViewModel() {
+@HiltViewModel
+class CharacterListViewModel @Inject constructor(
+    private val repository: CharacterListRepository,
+) : ViewModel() {
 
     private val _characterList = MutableStateFlow<List<CharacterListSection>>(emptyList())
     val characterList: StateFlow<List<CharacterListSection>> = _characterList
@@ -62,15 +65,6 @@ class CharacterListViewModel(private val repository: CharacterListRepository) : 
             _characterList.value = sectionList
             _isEightLoad.value = true
             _isSevenLoad.value = false
-        }
-    }
-
-    companion object {
-
-        fun provideFactory(repository: CharacterListRepository) = viewModelFactory {
-            initializer {
-                CharacterListViewModel(repository)
-            }
         }
     }
 }

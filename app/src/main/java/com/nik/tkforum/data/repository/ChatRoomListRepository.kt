@@ -4,8 +4,9 @@ import com.nik.tkforum.data.model.ChatRoom
 import com.nik.tkforum.data.model.User
 import com.nik.tkforum.data.source.remote.network.ApiClient
 import com.nik.tkforum.data.source.remote.network.ApiResponse
+import javax.inject.Inject
 
-class ChatRoomListRepository(private val apiClient: ApiClient) {
+class ChatRoomListRepository @Inject constructor(private val apiClient: ApiClient) {
 
     suspend fun getChatRoomList(): ApiResponse<Map<String, ChatRoom>> {
         return apiClient.getChatRoomList()
