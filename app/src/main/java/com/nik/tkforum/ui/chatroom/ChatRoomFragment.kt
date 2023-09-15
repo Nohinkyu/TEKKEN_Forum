@@ -81,7 +81,8 @@ class ChatRoomFragment : BaseFragment() {
             ).collect { sendError ->
                 if (sendError) {
                     Snackbar.make(binding.root, R.string.send_error_message, Snackbar.LENGTH_LONG)
-                        .show()
+                        .setAction(R.string.close_snack_bar) {
+                        }.show()
                 }
             }
         }
@@ -99,7 +100,8 @@ class ChatRoomFragment : BaseFragment() {
                             binding.root,
                             R.string.network_error_message,
                             Snackbar.LENGTH_LONG
-                        ).show()
+                        ).setAction(R.string.close_snack_bar) {
+                        }.show()
                     }
                 }
         }
@@ -124,7 +126,8 @@ class ChatRoomFragment : BaseFragment() {
                         binding.root,
                         R.string.not_host,
                         Snackbar.LENGTH_LONG
-                    ).show()
+                    ).setAction(R.string.close_snack_bar) {
+                    }.show()
                 }
             }
         }

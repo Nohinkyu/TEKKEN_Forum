@@ -41,19 +41,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Frame Data 검색"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/background_et_frame_list"
             android:drawableEnd="@drawable/ic_search"
+            android:hint="Frame Data 검색"
             android:inputType="text"
             android:maxLines="1"
             android:padding="10dp"
+            android:textCursorDrawable="@drawable/ic_cursor"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tb_frame_list"
+            app:layout_constraintBottom_toTopOf="@id/sv_frame_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/sv_frame_list"/>
+            app:layout_constraintTop_toBottomOf="@id/tb_frame_list" />
 
         <HorizontalScrollView
             android:id="@+id/sv_frame_list"
@@ -64,11 +65,105 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_frame_list">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_frame_data_list"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_header_move_name"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_move_name"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_start"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_start"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_header_move_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_grad"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_guard"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_move_start"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_hit"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_hit"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_move_grad"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_counter"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_counter"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_move_hit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_hit_level"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_hit_level"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_move_counter"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_move_damage"
+                    style="@style/FrameDataHeaderStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/border_white"
+                    android:gravity="center"
+                    android:text="@string/frame_header_damage"
+                    app:layout_constraintBottom_toTopOf="@id/rv_frame_data_list"
+                    app:layout_constraintStart_toEndOf="@id/tv_move_hit_level"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_frame_data_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_move_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </HorizontalScrollView>
 

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="userInfo"
+            type="com.nik.tkforum.data.model.User" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +31,7 @@
 
         <ImageView
             android:id="@+id/iv_profile_image"
+            imageUrlCircle="@{userInfo.profileUri}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
@@ -78,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="end"
+            android:text='@{userInfo.nickname}'
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_info_nickname"
@@ -91,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="end"
+            android:text='@{userInfo.email}'
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_info_mail"
@@ -106,10 +113,41 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:id="@+id/tv_frame_data_switch"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="340dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:text="8 프레임 표를 기본 으로 보기"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_frame_data_switch" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_check_series"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_frame_data_switch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_frame_data_switch"
+            app:track="@drawable/selector_switch" />
+
+        <TextView
             android:id="@+id/tv_get_frame_info"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginTop="300dp"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:text="@string/download_frame_data"
@@ -117,7 +155,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_frame_data_switch" />
 
         <View
             android:layout_width="0dp"

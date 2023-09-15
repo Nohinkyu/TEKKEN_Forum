@@ -1,112 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tv_move_name"
-        style="@style/FrameDataStyle"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_bottom_less"
-        android:gravity="center"
-        android:padding="2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="초풍" />
+    <data>
 
-    <TextView
-        android:id="@+id/tv_move_command"
-        style="@style/FrameDataStyle"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_top_less"
-        android:gravity="center"
-        android:padding="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_move_name"
-        tools:text="6N23RP" />
+        <variable
+            name="frameData"
+            type="com.nik.tkforum.data.model.FrameData" />
 
-    <TextView
-        android:id="@+id/tv_move_start"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_move_command"
-        app:layout_constraintStart_toEndOf="@id/tv_move_command"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="13" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_move_grad"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_move_start"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="13" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_move_hit"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_move_grad"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="+4" />
+        <TextView
+            android:id="@+id/tv_move_name"
+            style="@style/FrameDataStyle"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom_less"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text='@{frameData.name}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="초풍" />
 
-    <TextView
-        android:id="@+id/tv_move_counter"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_move_hit"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="D" />
+        <TextView
+            android:id="@+id/tv_move_command"
+            style="@style/FrameDataStyle"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_top_less"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text='@{frameData.numberCommand}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_move_name"
+            tools:text="6N23RP" />
 
-    <TextView
-        android:id="@+id/tv_move_hit_level"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_move_counter"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="중" />
+        <TextView
+            android:id="@+id/tv_move_start"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.startUpFrame}'
+            app:layout_constraintBottom_toBottomOf="@id/tv_move_command"
+            app:layout_constraintStart_toEndOf="@id/tv_move_command"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="13" />
 
-    <TextView
-        android:id="@+id/tv_move_damage"
-        style="@style/FrameDataStyle"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_move_hit_level"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="30" />
+        <TextView
+            android:id="@+id/tv_move_grad"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.gardFrame}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_move_start"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="13" />
 
+        <TextView
+            android:id="@+id/tv_move_hit"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.hitFrame}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_move_grad"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="+4" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_move_counter"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.counterFrame}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_move_hit"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="D" />
+
+        <TextView
+            android:id="@+id/tv_move_hit_level"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.hitLevel}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_move_counter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="중" />
+
+        <TextView
+            android:id="@+id/tv_move_damage"
+            style="@style/FrameDataStyle"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text='@{frameData.damage}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_move_hit_level"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="30" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.databinding.FragmentVideoBinding
 import com.nik.tkforum.util.Constants
@@ -31,6 +32,12 @@ class VideoFragment : BaseFragment(), VideoClickListener {
         editText.setOnKeyListener { view, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 if (editText.text.isNullOrEmpty()) {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.is_blank,
+                        Snackbar.LENGTH_LONG
+                    ).setAction(R.string.close_snack_bar) {
+                    }.show()
                     return@setOnKeyListener true
                 }
                 val imm =

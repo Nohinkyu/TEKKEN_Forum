@@ -11,7 +11,6 @@ import com.nik.tkforum.databinding.ItemFrameDataBinding
 class FrameListAdapter() :
     ListAdapter<FrameData, FrameListAdapter.FrameDataViewHolder>(FrameDataDiffUtil()) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrameDataViewHolder {
         return FrameDataViewHolder.from(parent)
     }
@@ -20,18 +19,10 @@ class FrameListAdapter() :
         holder.bind(currentList[position])
     }
 
-
     class FrameDataViewHolder(private val binding: ItemFrameDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(frameData: FrameData) {
-            binding.tvMoveName.text = frameData.name
-            binding.tvMoveCommand.text = frameData.numberCommand
-            binding.tvMoveStart.text = frameData.startUpFrame
-            binding.tvMoveGrad.text = frameData.gardFrame
-            binding.tvMoveHit.text = frameData.hitFrame
-            binding.tvMoveCounter.text = frameData.counterFrame
-            binding.tvMoveHitLevel.text = frameData.hitLevel
-            binding.tvMoveDamage.text = frameData.damage
+            binding.frameData = frameData
         }
 
         companion object {
