@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
@@ -20,6 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.nik.tkforum.BuildConfig
 import com.nik.tkforum.R
 import com.nik.tkforum.TekkenForumApplication
+import com.nik.tkforum.data.repository.SignInRepository
 import com.nik.tkforum.databinding.FragmentLoginBinding
 import com.nik.tkforum.ui.BaseFragment
 import com.nik.tkforum.util.Constants
@@ -33,6 +35,15 @@ class SignInFragment : BaseFragment() {
     private lateinit var signInRequest: BeginSignInRequest
     private lateinit var auth: FirebaseAuth
     private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+
+    private val viewModel by viewModels<SignInViewModel> {
+        SignInViewModel.provideFactory(
+            repository = SignInRepository(
+                TekkenForumApplication.appContainer.provideGoogleApiClient(),
+                TekkenForumApplication.database
+            )
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,6 +77,8 @@ class SignInFragment : BaseFragment() {
                     activityResultLauncher.launch(
                         IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     )
+                    viewModel.getSevenCharacterList()
+                    viewModel.getEightCharacterList()
                 } catch (e: IntentSender.SendIntentException) {
                     Log.e(TAG, "sign-in error: ${e.localizedMessage}")
                 }
@@ -125,6 +138,8 @@ class SignInFragment : BaseFragment() {
                     activityResultLauncher.launch(
                         IntentSenderRequest.Builder(result.intentSender).build()
                     )
+                    viewModel.getSevenCharacterList()
+                    viewModel.getEightCharacterList()
                 } catch (e: IntentSender.SendIntentException) {
                     Log.e(TAG, "Google Sign-in failed")
                 }
@@ -133,12 +148,12 @@ class SignInFragment : BaseFragment() {
             }
     }
 
-    private fun saveUserInfo(){
+    private fun saveUserInfo() {
         val firebase = auth.currentUser
-        with(TekkenForumApplication.preferencesManager){
-            putString(Constants.KEY_NICKNAME,firebase?.displayName.toString())
-            putString(Constants.KEY_MAIL_ADDRESS,firebase?.email.toString())
-            putString(Constants.KEY_PROFILE_IMAGE,firebase?.photoUrl.toString())
+        with(TekkenForumApplication.preferencesManager) {
+            putString(Constants.KEY_NICKNAME, firebase?.displayName.toString())
+            putString(Constants.KEY_MAIL_ADDRESS, firebase?.email.toString())
+            putString(Constants.KEY_PROFILE_IMAGE, firebase?.photoUrl.toString())
         }
     }
 

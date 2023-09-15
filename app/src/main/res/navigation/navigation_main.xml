@@ -80,6 +80,10 @@
         android:id="@+id/nav_frame_list"
         android:name="com.nik.tkforum.ui.frameList.FrameListFragment"
         android:label="@string/frame_list"
-        tools:layout="@layout/fragment_frame_list" />
+        tools:layout="@layout/fragment_frame_list" >
+        <argument
+            android:name="character_data"
+            app:argType="com.nik.tkforum.data.model.CharacterData"/>
+    </fragment>
 
 </navigation>
