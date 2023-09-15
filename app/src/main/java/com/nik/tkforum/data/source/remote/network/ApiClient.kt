@@ -37,5 +37,5 @@ interface ApiClient {
     suspend fun deleteChatRoom(@Path("chatRoomKey") chatRoomKey: String): ApiResponse<Map<String, String>>
 
     @GET("{season}.json")
-    suspend fun getSeasonCharacterList(@Path("season") chatRoomKey: String): ApiResponse<SeasonCharacterList>
+    suspend fun getSeasonCharacterList(@Path("season") seasonName: String): ApiResponse<SeasonCharacterList>
 }

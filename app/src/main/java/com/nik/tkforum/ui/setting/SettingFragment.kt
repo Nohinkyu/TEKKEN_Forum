@@ -36,6 +36,10 @@ class SettingFragment : BaseFragment() {
         binding.tvSurvey.setOnClickListener {
             surveyClick()
         }
+
+        binding.tvGetFrameInfo.setOnClickListener {
+            getFrameInfo()
+        }
     }
 
     private fun signOut() {
@@ -59,5 +63,12 @@ class SettingFragment : BaseFragment() {
     private fun surveyClick() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.SURVEY_URI))
         startActivity(intent)
+    }
+
+    private fun getFrameInfo() {
+        val dbFile = requireContext().getDatabasePath(Constants.CHARACTER_DATA_BASE)
+        if (dbFile.exists()) {
+            dbFile.delete()
+        }
     }
 }
