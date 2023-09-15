@@ -18,8 +18,8 @@ class CharacterListRepository @Inject constructor(
         return dao.getAllCharacterList()
     }
 
-    suspend fun getSeasonCharacterList(season: String): ApiResponse<SeasonCharacterList> {
-        return apiClient.getSeasonCharacterList(season)
+    suspend fun getSeasonCharacterList(season: String, auth: String): ApiResponse<SeasonCharacterList> {
+        return apiClient.getSeasonCharacterList(season, auth)
     }
 
     suspend fun insertCharacterList(characterListEntity: CharacterListEntity) {

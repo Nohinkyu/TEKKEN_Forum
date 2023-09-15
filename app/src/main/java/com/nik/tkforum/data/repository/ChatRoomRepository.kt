@@ -24,9 +24,10 @@ class ChatRoomRepository @Inject constructor(private val apiClient: ApiClient) {
     fun getChatList(
         onComplete: () -> Unit,
         onError: (code: Int, message: String?) -> Unit,
-        chatRoomKey: String
+        chatRoomKey: String,
+        auth: String
     ): Flow<ApiResponse<Map<String, Chat>>> = flow {
-        val response = apiClient.getChatList(chatRoomKey)
+        val response = apiClient.getChatList(chatRoomKey, auth)
         response.onSuccess { data ->
             emit(ApiResultSuccess(data))
         }.onError { code, message ->
@@ -38,12 +39,19 @@ class ChatRoomRepository @Inject constructor(private val apiClient: ApiClient) {
         onComplete()
     }.flowOn(Dispatchers.Default)
 
-    suspend fun sendChat(chatRoomKey: String, chat: Chat): ApiResponse<Map<String, String>> {
-        return apiClient.sendChat(chatRoomKey, chat)
+    suspend fun sendChat(
+        chatRoomKey: String,
+        chat: Chat,
+        auth: String
+    ): ApiResponse<Map<String, String>> {
+        return apiClient.sendChat(chatRoomKey, chat, auth)
     }
 
-    suspend fun deleteChatRoom(chatRoomKey: String): ApiResponse<Map<String, String>> {
-        return apiClient.deleteChatRoom(chatRoomKey)
+    suspend fun deleteChatRoom(
+        chatRoomKey: String,
+        auth: String
+    ): ApiResponse<Map<String, String>> {
+        return apiClient.deleteChatRoom(chatRoomKey, auth)
     }
 
     fun addChatListener(

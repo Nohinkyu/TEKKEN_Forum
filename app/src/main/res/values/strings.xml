@@ -57,4 +57,5 @@
     <string name="notification_permission">데이터 업데이트 알림 받기</string>
     <string name="notification_permission_message">프레임 데이터 업데이트 소식을 알림으로 받습니다.</string>
     <string name="notification_permission_denied_message">프레임 데이터 업데이트 관련 중요한 알림을 받아보시려면 알림 권한을 허용해 주세요.</string>
+    <string name="setting_frame_data_switch">8 캐릭터 리스트 를 기본 으로 보기</string>
 </resources>

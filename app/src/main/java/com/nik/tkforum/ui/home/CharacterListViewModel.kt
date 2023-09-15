@@ -6,6 +6,7 @@ import com.nik.tkforum.data.repository.CharacterListRepository
 import com.nik.tkforum.data.repository.UserRepository
 import com.nik.tkforum.data.source.local.CharacterListEntity
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
+import com.nik.tkforum.data.source.remote.network.FirebaseData
 import com.nik.tkforum.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,11 +88,12 @@ class CharacterListViewModel @Inject constructor(
     }
 
     fun getCharacterList() {
+        val auth = FirebaseData.token.toString()
         viewModelScope.launch {
             if (repository.getCharacterList().isEmpty()) {
                 _isLoading.value = true
                 for (season in Constants.SERIES_LIST) {
-                    when (val response = repository.getSeasonCharacterList(season)) {
+                    when (val response = repository.getSeasonCharacterList(season, auth)) {
                         is ApiResultSuccess -> {
                             val entity = CharacterListEntity(
                                 season = response.data.season,

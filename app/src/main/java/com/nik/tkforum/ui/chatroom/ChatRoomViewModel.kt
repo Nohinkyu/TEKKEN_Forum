@@ -7,6 +7,7 @@ import com.nik.tkforum.data.model.Chat
 import com.nik.tkforum.data.source.remote.network.ApiResultSuccess
 import com.nik.tkforum.data.repository.ChatRoomRepository
 import com.nik.tkforum.data.repository.UserRepository
+import com.nik.tkforum.data.source.remote.network.FirebaseData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,6 +43,8 @@ class ChatRoomViewModel @Inject constructor(
 
     val userInfo = userRepository.getUserInfo()
 
+    private val auth = FirebaseData.token.toString()
+
     fun loadChatList(chatRoomKey: String) {
         viewModelScope.launch {
             repository.getChatList(
@@ -49,7 +52,8 @@ class ChatRoomViewModel @Inject constructor(
                 onError = { code, message ->
                     _isLoading.value = code == 200
                 },
-                chatRoomKey
+                chatRoomKey,
+                auth
             ).collect { }
         }
     }
@@ -57,7 +61,7 @@ class ChatRoomViewModel @Inject constructor(
     fun sendChat(chatRoomKey: String, message: String) {
         val chat = Chat(userInfo.profileUri, userInfo.nickname, message, userInfo.email)
         viewModelScope.launch {
-            when (repository.sendChat(chatRoomKey, chat)) {
+            when (repository.sendChat(chatRoomKey, chat, auth)) {
                 is ApiResultSuccess -> {
                     _sendError.value = false
                 }
@@ -84,7 +88,7 @@ class ChatRoomViewModel @Inject constructor(
             _isChatRoomHost.value = false
             userRepository.deleteChatRoom()
             viewModelScope.launch {
-                when (repository.deleteChatRoom(chatRoomKey)) {
+                when (repository.deleteChatRoom(chatRoomKey, auth)) {
                     is ApiResultSuccess -> {
                         _deleteError.value = false
                         _isSuccessDeleteChatRoom.value = true

@@ -13,6 +13,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nik.tkforum.R
 import com.nik.tkforum.data.model.CharacterData
+import com.nik.tkforum.data.source.remote.network.FirebaseData
+import com.nik.tkforum.data.source.remote.network.FirebaseData.getUserToken
+import com.nik.tkforum.data.source.remote.network.FirebaseData.setUserInfo
 import com.nik.tkforum.databinding.FragmentHomeBinding
 import com.nik.tkforum.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +37,7 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
         isSavedFrameData()
         isSuccessSave()
         setErrorMessage()
+        setFirebaseUserInfo()
 
         binding.ibEight.setOnClickListener {
             setEightCharacterList()
@@ -189,6 +193,13 @@ class HomeFragment : BaseFragment(), CharacterClickListener {
                         }.show()
                     }
                 }
+        }
+    }
+
+    private fun setFirebaseUserInfo() {
+        if (FirebaseData.token.isNullOrBlank()) {
+            setUserInfo()
+            getUserToken()
         }
     }
 }
