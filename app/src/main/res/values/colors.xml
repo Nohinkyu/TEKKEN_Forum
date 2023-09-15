@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#E3ECF1</color>
     <color name="lite_blue">#3D85DC</color>
+    <color name="black_appbar">#17253C</color>
+    <color name="black_top_bar">#0C0F17</color>
+    <color name="lite_red">#F52468</color>
+    <color name="lite_grey">#888B92</color>
 </resources>

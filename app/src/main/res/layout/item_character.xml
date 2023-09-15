@@ -18,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.characterClick(characterInfo)}">
+        android:onClick="@{() -> clickListener.characterClick(characterInfo)}"
+        tools:background="@color/black_appbar">
 
         <ImageView
             android:id="@+id/iv_character_image"
@@ -28,21 +29,22 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/lite_blue"
+            android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_7_brayn" />
+            tools:src="@drawable/ic_question_mark" />
 
         <TextView
             android:id="@+id/tv_character_name"
             android:layout_width="0dp"
             android:layout_height="20dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:text="@{characterInfo.characterName}"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="@id/iv_character_image"
             app:layout_constraintStart_toStartOf="@id/iv_character_image"
             app:layout_constraintTop_toTopOf="@id/iv_character_image"

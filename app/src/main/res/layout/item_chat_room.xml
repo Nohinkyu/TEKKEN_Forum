@@ -18,7 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.chatRoomClick(chatRoomInfo.key,chatRoomInfo.chatRoom.createUserName)}">
+        android:onClick="@{() -> clickListener.chatRoomClick(chatRoomInfo.key,chatRoomInfo.chatRoom.createUserName)}"
+        tools:background="@color/black">
 
         <ImageView
             android:id="@+id/iv_chat_thumbnail"
@@ -43,7 +44,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text='@{chatRoomInfo.chatRoom.createUserName + " 님의 방입니다"}'
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_chat_thumbnail"
@@ -56,6 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:textColor="@color/lite_grey"
             app:layout_constraintBottom_toBottomOf="@id/tv_chat_title"
             app:layout_constraintStart_toEndOf="@id/tv_chat_title"
             app:layout_constraintTop_toTopOf="@id/tv_chat_title"
@@ -68,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_chat_title"

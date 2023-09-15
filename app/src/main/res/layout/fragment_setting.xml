@@ -9,18 +9,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@drawable/background_gradient">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_setting"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/black_appbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/setting"
             app:titleMarginStart="16dp"
-            app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
+            app:titleTextAppearance="@style/TopAppbarTitleTextStyle"
+            app:titleTextColor="@color/white" />
 
         <ImageView
             android:id="@+id/iv_profile_image"
@@ -40,7 +43,7 @@
             android:layout_marginEnd="24dp"
             android:gravity="end"
             android:text="@string/profile_info"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_profile_image"
@@ -53,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/nickname"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/iv_profile_image"
             app:layout_constraintTop_toBottomOf="@id/iv_profile_image" />
 
@@ -63,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/mail"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/tv_info_nickname"
             app:layout_constraintTop_toBottomOf="@id/tv_info_nickname" />
 
@@ -73,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="end"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_info_nickname"
             app:layout_constraintTop_toTopOf="@id/tv_info_nickname"
@@ -85,49 +91,71 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="end"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_info_mail"
             app:layout_constraintTop_toTopOf="@id/tv_info_mail"
             tools:text="wasingun@gmail.com" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toTopOf="@id/tv_get_frame_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_get_frame_info"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="40dp"
             android:layout_marginTop="300dp"
-            android:background="@drawable/border_grey"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:text="@string/download_frame_data"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@id/tv_get_frame_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_survey"
             android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:background="@drawable/border_grey"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:text="@string/survey"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_get_frame_info" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@id/tv_survey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:background="@drawable/border_grey"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:text="@string/sign_out"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

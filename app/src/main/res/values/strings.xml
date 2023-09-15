@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">tkForum</string>
-    <string name="app_title">TEKKEN FORUM</string>
+    <string name="app_title">Tekken Forum</string>
     <string name="home">Home</string>
     <string name="video">Video</string>
     <string name="chat">Chat</string>
     <string name="login">Login</string>
     <string name="setting">Setting</string>
-    <string name="character_list">CHARACTER LIST</string>
+    <string name="character_list">Character List</string>
     <string name="video_hint">동영상을 검색해주세요~</string>
     <string name="sign_out">로그아웃</string>
     <string name="chat_room">Chat Room</string>
@@ -30,4 +30,5 @@
     <string name="network_error_message">네트워크 연결 상태를 확인 해주세요</string>
     <string name="send_error_message">메시지 전송에 실패했습니다</string>
     <string name="empty_data">추후 데이터 추가 예정 입니다.</string>
+    <string name="hint_et_chat_room">메시지 입력</string>
 </resources>

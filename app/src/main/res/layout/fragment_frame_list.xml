@@ -9,30 +9,51 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_frame_list"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/black_appbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/menu_frame_appbar"
             app:titleMarginStart="16dp"
             app:titleTextAppearance="@style/TopAppbarTitleTextStyle"
+            app:titleTextColor="@color/white"
             tools:title="PAUL" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black_appbar"
+            app:layout_constraintBottom_toTopOf="@id/sv_frame_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_frame_list" />
 
         <EditText
             android:id="@+id/et_frame_list"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Frame Data 검색"
+            android:background="@drawable/background_et_frame_list"
+            android:drawableEnd="@drawable/ic_search"
             android:inputType="text"
             android:maxLines="1"
+            android:padding="10dp"
             android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tb_frame_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_frame_list" />
+            app:layout_constraintBottom_toTopOf="@id/sv_frame_list"/>
 
         <HorizontalScrollView
             android:id="@+id/sv_frame_list"

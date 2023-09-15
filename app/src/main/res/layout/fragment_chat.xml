@@ -9,19 +9,22 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@drawable/background_gradient">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_chat"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/black_appbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/menu_chat_appbar"
             app:title="@string/chat"
             app:titleMarginStart="16dp"
-            app:titleTextAppearance="@style/TopAppbarTitleTextStyle" />
+            app:titleTextAppearance="@style/TopAppbarTitleTextStyle"
+            app:titleTextColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_chat_room_list"
