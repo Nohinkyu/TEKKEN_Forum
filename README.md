@@ -13,9 +13,14 @@
 - Architecture: MVVM
 - Asynchronous: Coroutines + Flow
 - Networking: Retrofit, OkHttp3, Moshi
-- JetPack: ViewModel, Navigation, DataBinding
+- JetPack: ViewModel, Navigation, DataBinding, Paging
 - Image: Coil
 - Local DB: Room
 - Firebase: Realtime Database, Cloud Messaging, Auth
 - Dependency injection: Hilt
 - Open Api: KAKAO Video Search
+
+# 주요 기능 소개
+|로그인|프레임 데이터 다운로드|캐릭터리스트|
+|![로그인](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/0ad85b99-bed9-4b79-818e-361dcc76c251)|
+![프레임데이터-다운로드](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/61e54fb7-cffe-4b64-b561-7c2ef4a63777)|![캐릭터-리스트](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/7b616035-b744-4e63-9542-7584d57d44a8)|
