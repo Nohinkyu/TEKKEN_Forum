@@ -24,3 +24,8 @@
 |로그인|프레임 데이터 다운로드|캐릭터리스트|
 |------|---|---|
 |![로그인](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/0ad85b99-bed9-4b79-818e-361dcc76c251)|![프레임데이터-다운로드](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/61e54fb7-cffe-4b64-b561-7c2ef4a63777)|![캐릭터-리스트](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/7b616035-b744-4e63-9542-7584d57d44a8)|
+
+
+|프레임 데이터 검색|메뉴얼|동영상 검색|
+|------|---|---|
+|![프레임-데이터-검색](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/818531d3-4904-4f63-a9a1-a8a3f8082529)|![메뉴얼](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/c7f615a7-3d04-4c25-83bd-cf8e3dded5ee)|![동영상검색](https://github.com/Nohinkyu/TEKKEN_Forum/assets/121728722/e13eb0e7-f3e4-46da-815c-e337d626e199)|
